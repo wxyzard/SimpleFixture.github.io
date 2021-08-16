@@ -1,18 +1,20 @@
 package com.yarm.fixturegen.valuegenerator;
 
+import com.yarm.fixturegen.cache.CacheContext;
 import com.yarm.fixturegen.utils.ClassUtils;
 import com.yarm.fixturegen.Fixture;
-import com.yarm.fixturegen.FixtureConfig;
-import lombok.NoArgsConstructor;
+import com.yarm.fixturegen.config.FixtureConfig;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.*;
 
-@NoArgsConstructor
-public class MapValueGenerator implements ValueGenerator<Map>{
+
+public final class MapValueGenerator implements ValueGenerator<Map>{
 
     private Type[] types;
     private FixtureConfig config;
+    private Field field;
 
     public MapValueGenerator(Type[] types){
         this.types = types;
@@ -25,6 +27,12 @@ public class MapValueGenerator implements ValueGenerator<Map>{
     }
 
     @Override
+    public MapValueGenerator field(Field field) {
+        this.field = field;
+        return this;
+    }
+
+    @Override
     public Map create() {
         try{
             int loopCount = config.getMaxCollectionSize();
@@ -33,8 +41,8 @@ public class MapValueGenerator implements ValueGenerator<Map>{
                 return m;
             }
             for(int i=0;i<loopCount;i++){
-                m.put(new Fixture().config(config).generateValue(ClassUtils.castToClass(types[0])),
-                        new Fixture().generateValue(ClassUtils.castToClass(types[1])));
+                m.put(new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[0])),
+                        new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[1])));
             }
             return m;
         }catch (Exception e){

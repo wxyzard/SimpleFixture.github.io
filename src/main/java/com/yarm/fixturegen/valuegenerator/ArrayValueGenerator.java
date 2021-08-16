@@ -1,17 +1,17 @@
 package com.yarm.fixturegen.valuegenerator;
 
+import com.yarm.fixturegen.cache.CacheContext;
 import com.yarm.fixturegen.utils.ClassUtils;
 import com.yarm.fixturegen.Fixture;
-import com.yarm.fixturegen.FixtureConfig;
-import lombok.NoArgsConstructor;
+import com.yarm.fixturegen.config.FixtureConfig;
 
 import java.lang.reflect.*;
 
-@NoArgsConstructor
-public class ArrayValueGenerator implements ValueGenerator{
+public final class ArrayValueGenerator implements ValueGenerator{
 
     private Type type;
     private FixtureConfig config;
+    private Field field;
 
     public ArrayValueGenerator(Type type){
         this.type = type;
@@ -24,6 +24,12 @@ public class ArrayValueGenerator implements ValueGenerator{
     }
 
     @Override
+    public ArrayValueGenerator field(Field field) {
+        this.field = field;
+        return this;
+    }
+
+    @Override
     public Object create() {
         try{
             int loopCount = config.getMaxCollectionSize();
@@ -32,11 +38,11 @@ public class ArrayValueGenerator implements ValueGenerator{
             if(loopCount==0){
                 return Array.newInstance(aClass, 0);
             }
-            Object objects = Array.newInstance(aClass, loopCount);
+            Object objs = Array.newInstance(aClass, loopCount);
             for(int i=0;i<loopCount;i++){
-                Array.set(objects, i, new Fixture().config(config).generateValue(aClass));
+                Array.set(objs, i, new Fixture().field(field).config(config).create(aClass));
             }
-            return objects;
+            return objs;
         }catch (Exception e){
             throw new RuntimeException(e);
         }
