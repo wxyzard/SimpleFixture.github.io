@@ -30,11 +30,10 @@ public final class DoubleValueGenerator implements ValueGenerator<Double> {
         double rightLimit = leftLimit * 10L;
         double generatedDouble = 0;
 
-        if(config.getNumberValueType().equals(NumberValueType.SEQUENCE)){
+        if(config.isSequenceNumberType()){
             MetaCache metaCache = CacheContext.get(field);
-            if(metaCache==null){
-                generatedDouble = leftLimit;
-            }else{
+            generatedDouble = leftLimit;
+            if(metaCache!=null){
                 generatedDouble = leftLimit + metaCache.getAssignCount();
             }
         } else {

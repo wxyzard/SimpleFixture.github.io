@@ -31,11 +31,10 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
 
         int generatedInteger = 0;
 
-        if(config.getNumberValueType().equals(NumberValueType.SEQUENCE)){
+        if(config.isSequenceNumberType()){
             MetaCache metaCache = CacheContext.get(field);
-            if(metaCache==null){
-                generatedInteger = leftLimit;
-            }else{
+            generatedInteger = leftLimit;
+            if(metaCache!=null){
                 generatedInteger = leftLimit + metaCache.getAssignCount();
             }
         } else {

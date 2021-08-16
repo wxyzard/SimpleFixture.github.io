@@ -76,4 +76,8 @@ public class FixtureConfig {
         return theme;
     }
 
+    public boolean isSequenceNumberType(){
+        return getNumberValueType().equals(NumberValueType.SEQUENCE);
+    }
+
 }

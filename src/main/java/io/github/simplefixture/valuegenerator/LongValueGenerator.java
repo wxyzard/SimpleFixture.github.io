@@ -31,11 +31,10 @@ public final class LongValueGenerator implements ValueGenerator<Long> {
 
         long generatedLong;
 
-        if(config.getNumberValueType().equals(NumberValueType.SEQUENCE)){
+        if(config.isSequenceNumberType()){
             MetaCache metaCache = CacheContext.get(field);
-            if(metaCache==null){
-                generatedLong = leftLimit;
-            }else{
+            generatedLong = leftLimit;
+            if(metaCache!=null){
                 generatedLong = leftLimit + metaCache.getAssignCount();
             }
         } else {

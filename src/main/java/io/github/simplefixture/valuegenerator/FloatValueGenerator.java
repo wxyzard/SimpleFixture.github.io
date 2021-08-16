@@ -32,11 +32,10 @@ public final class FloatValueGenerator implements ValueGenerator<Float> {
 
         float generatedFloat = 0f;
 
-        if(config.getNumberValueType().equals(NumberValueType.SEQUENCE)){
+        if(config.isSequenceNumberType()){
             MetaCache metaCache = CacheContext.get(field);
-            if(metaCache==null){
-                generatedFloat = leftLimit;
-            }else{
+            generatedFloat = leftLimit;
+            if(metaCache!=null){
                 generatedFloat = leftLimit + metaCache.getAssignCount();
             }
         } else {

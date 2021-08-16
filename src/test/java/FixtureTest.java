@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
-public class FixtureTest2 {
+public class FixtureTest {
 
     Fixture fixture = new Fixture();
 
