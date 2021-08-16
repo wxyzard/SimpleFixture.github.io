@@ -13,6 +13,6 @@ public class FixtureTest {
 
         Order order = fixture.create(Order.class);
 
-        Assertions.assertEquals(order.getOrderName(), "ordername");
+        Assertions.assertEquals(order, "ordername");
     }
 }
