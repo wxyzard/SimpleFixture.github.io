@@ -11,7 +11,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 import Sample
 import io.github.simplefixture.Fixture;
 
-# returns 'sample fixture'
+//returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
 ```
