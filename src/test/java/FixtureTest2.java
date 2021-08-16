@@ -1,6 +1,4 @@
-import com.yarm.fixturegen.Fixture;
-import com.yarm.fixturegen.config.FixtureConfig;
-import com.yarm.fixturegen.theme.FCTheme;
+import io.github.simplefixture.Fixture;
 import sample.Order;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

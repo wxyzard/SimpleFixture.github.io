@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="fixturegen">
+    <output-path>$PROJECT_DIR$/out/artifacts/fixturegen</output-path>
+    <root id="archive" name="fixturegen.jar">
+      <element id="module-output" name="fixturegen" />
+    </root>
+  </artifact>
+</component>
