@@ -1,17 +1,13 @@
 # simplefixture.github.io
 fc fixture generator
 
-## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
-```bash
-pip install foobar
-```
 
 ## Usage
 
-```python
+```java
 import foobar
 
 # returns 'words'
