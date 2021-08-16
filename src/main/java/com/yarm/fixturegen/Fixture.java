@@ -12,7 +12,6 @@ public class Fixture {
     private FixtureConfig config = new FixtureConfig();
     private Field field;
 
-
     public <T> T create(Class<T> clazz) {
         try {
             if(ClassUtils.isNoneObjectType(clazz)){
@@ -23,7 +22,6 @@ public class Fixture {
                 for(Field f : instance.getClass().getDeclaredFields()){
                     Class<?> type = f.getType();
                     if(!CacheContext.exist(type)){
-                        CacheContext.cache(f);
                         setField(f, instance, generateValue(f));
                     }else{
                         setField(f, instance, CacheContext.get(type));
@@ -42,6 +40,8 @@ public class Fixture {
     }
 
     private Object generateValue(Field _field){
+        CacheContext.cache(_field);
+
         if(_field.getType()==byte.class||_field.getType()==Byte.class){
             return new ByteValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==boolean.class||_field.getType()==Boolean.class){
@@ -70,6 +70,8 @@ public class Fixture {
     }
 
     private Object generateValue(Type type){
+        CacheContext.cache(field);
+
         if(type==byte.class||type==Byte.class){
             return new ByteValueGenerator().field(field).config(config).create();
         }else if(type==boolean.class||type==Boolean.class){

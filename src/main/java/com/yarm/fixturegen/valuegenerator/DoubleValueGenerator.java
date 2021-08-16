@@ -1,5 +1,8 @@
 package com.yarm.fixturegen.valuegenerator;
 
+import com.yarm.fixturegen.NumberValueType;
+import com.yarm.fixturegen.cache.CacheContext;
+import com.yarm.fixturegen.cache.MetaCache;
 import com.yarm.fixturegen.config.FixtureConfig;
 
 import java.lang.reflect.Field;
@@ -23,9 +26,20 @@ public final class DoubleValueGenerator implements ValueGenerator<Double> {
 
     @Override
     public Double create() {
-        double leftLimit = 10000000L;
-        double rightLimit = 100000000L;
-        double generatedDouble = leftLimit + (Math.random() * (rightLimit - leftLimit));
+        double leftLimit = Math.pow(10L, config.getDoubleDigitSize());
+        double rightLimit = leftLimit * 10L;
+        double generatedDouble = 0;
+
+        if(config.getNumberValueType().equals(NumberValueType.SEQUENCE)){
+            MetaCache metaCache = CacheContext.get(field);
+            if(metaCache==null){
+                generatedDouble = leftLimit;
+            }else{
+                generatedDouble = leftLimit + metaCache.getAssignCount();
+            }
+        } else {
+            generatedDouble = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+        }
 
         return config.getTheme().getRedefinedValue(field, generatedDouble);
     }

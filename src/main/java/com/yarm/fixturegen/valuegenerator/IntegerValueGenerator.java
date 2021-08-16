@@ -1,5 +1,8 @@
 package com.yarm.fixturegen.valuegenerator;
 
+import com.yarm.fixturegen.NumberValueType;
+import com.yarm.fixturegen.cache.CacheContext;
+import com.yarm.fixturegen.cache.MetaCache;
 import com.yarm.fixturegen.config.FixtureConfig;
 
 import java.lang.reflect.Field;
@@ -24,9 +27,30 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
 
     @Override
     public Integer create() {
-        int leftLimit = 100000;
-        int rightLimit = 100000000;
-        int generatedInteger = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
+        int leftLimit =  pow(10, config.getLongDigitSize());
+        int rightLimit = leftLimit * 10;
+
+        int generatedInteger = 0;
+
+        if(config.getNumberValueType().equals(NumberValueType.SEQUENCE)){
+            MetaCache metaCache = CacheContext.get(field);
+            if(metaCache==null){
+                generatedInteger = leftLimit;
+            }else{
+                generatedInteger = leftLimit + metaCache.getAssignCount();
+            }
+        } else {
+            generatedInteger = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
+        }
+
         return config.getTheme().getRedefinedValue(field, generatedInteger);
+    }
+
+    private Integer pow(int a, int b){
+        Integer result = 1;
+        for(int i=0;i<b;i++){
+            result *= a;
+        }
+        return result;
     }
 }

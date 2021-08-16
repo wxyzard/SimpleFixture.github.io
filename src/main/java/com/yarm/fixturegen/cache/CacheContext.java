@@ -7,14 +7,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CacheContext {
     private static final Map<Class<?>, Object> fixtureMapCache = new LinkedHashMap<>();
-    private static final Map<String, MetaCache> fieldMapCache = new LinkedHashMap<>();
+    private static final Map<Integer, MetaCache> fieldMapCache = new LinkedHashMap<>();
 
     public static void cache(Class<?> key, Object value){
         fixtureMapCache.put(key, value);
     }
 
     public static void cache(Field field){
-        String key = field.getDeclaringClass().getName() + field.getName();
+        int key = field.getDeclaringClass().hashCode()+field.hashCode();
         MetaCache metaCache = fieldMapCache.get(key);
         if(metaCache==null){
             metaCache = new MetaCache(field);
@@ -33,7 +33,7 @@ public class CacheContext {
     }
 
     public static MetaCache get(Field field){
-        String key = field.getDeclaringClass().getName() + field.getName();
+        int key = field.getDeclaringClass().hashCode()+field.hashCode();
         return fieldMapCache.get(key);
     }
 

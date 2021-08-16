@@ -1,5 +1,8 @@
 package com.yarm.fixturegen.valuegenerator;
 
+import com.yarm.fixturegen.NumberValueType;
+import com.yarm.fixturegen.cache.CacheContext;
+import com.yarm.fixturegen.cache.MetaCache;
 import com.yarm.fixturegen.config.FixtureConfig;
 import java.lang.reflect.Field;
 
@@ -22,10 +25,30 @@ public final class LongValueGenerator implements ValueGenerator<Long> {
 
     @Override
     public Long create() {
-        long leftLimit = 10000000L;
-        long rightLimit = 100000000L;
-        long generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+        long leftLimit =  pow(10L, config.getLongDigitSize());
+        long rightLimit = leftLimit * 10L;
+
+        long generatedLong;
+
+        if(config.getNumberValueType().equals(NumberValueType.SEQUENCE)){
+            MetaCache metaCache = CacheContext.get(field);
+            if(metaCache==null){
+                generatedLong = leftLimit;
+            }else{
+                generatedLong = leftLimit + metaCache.getAssignCount();
+            }
+        } else {
+            generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+        }
 
         return config.getTheme().getRedefinedValue(field, generatedLong);
+    }
+
+    private Long pow(long a, long b){
+        Long result = 1L;
+        for(int i=0;i<b;i++){
+            result *= a;
+        }
+        return result;
     }
 }
