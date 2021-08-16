@@ -8,16 +8,12 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 ## Usage
 
 ```java
-import foobar
+import Sample
+import io.github.simplefixture.Fixture;
 
-# returns 'words'
-foobar.pluralize('word')
+# returns 'sample fixture'
+Sample sample = fixture.create(Sample.class);
 
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
 ```
 
 ## Contributing
@@ -26,5 +22,5 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[Mozilla Public License version 2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 
