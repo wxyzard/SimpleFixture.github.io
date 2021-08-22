@@ -4,5 +4,5 @@ import java.lang.reflect.Field;
 
 public interface Theme {
 
-    <T> T getRedefinedValue(Field field, T value);
+    <T> T getValue(int index, Field field, T value);
 }

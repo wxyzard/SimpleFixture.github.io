@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.simplefixture</groupId>
+    <groupId>io.github.wxyzard</groupId>
     <artifactId>simplefixture</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 
     <name>simplefixture</name>
     <description>auto generator fixture for test</description>
@@ -34,11 +34,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -137,9 +137,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
-
-
 
 </project>

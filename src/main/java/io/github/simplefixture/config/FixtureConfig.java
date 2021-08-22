@@ -2,7 +2,7 @@ package io.github.simplefixture.config;
 
 import io.github.simplefixture.NumberValueType;
 import io.github.simplefixture.StringValueType;
-import io.github.simplefixture.theme.FCTheme;
+import io.github.simplefixture.theme.DefaultTheme;
 import io.github.simplefixture.theme.Theme;
 
 public class FixtureConfig {
@@ -26,7 +26,7 @@ public class FixtureConfig {
         this.valueType = StringValueType.FIELD;
         this.numberType = NumberValueType.SEQUENCE;
         this.onlyPositive = true;
-        this.theme = new FCTheme();
+        this.theme = new DefaultTheme();
     }
 
     public FixtureConfig(int maxCollectionSize){

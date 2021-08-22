@@ -1,5 +1,7 @@
 package io.github.simplefixture.valuegenerator;
 
+import io.github.simplefixture.cache.CacheContext;
+import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;
@@ -25,6 +27,7 @@ public final class ByteValueGenerator  implements ValueGenerator<Byte>{
     public Byte create() {
         byte[] randomBytes = new byte[1];
         new Random().nextBytes(randomBytes);
-        return config.getTheme().getRedefinedValue(field, randomBytes[0]);
+        MetaCache metaCache = CacheContext.get(field);
+        return config.getTheme().getValue(metaCache.getAssignCount(), field, randomBytes[0]);
     }
 }

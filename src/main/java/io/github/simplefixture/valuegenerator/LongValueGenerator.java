@@ -1,6 +1,5 @@
 package io.github.simplefixture.valuegenerator;
 
-import io.github.simplefixture.NumberValueType;
 import io.github.simplefixture.cache.CacheContext;
 import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
@@ -30,18 +29,19 @@ public final class LongValueGenerator implements ValueGenerator<Long> {
         long rightLimit = leftLimit * 10L;
 
         long generatedLong;
+        MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            MetaCache metaCache = CacheContext.get(field);
             generatedLong = leftLimit;
             if(metaCache!=null){
                 generatedLong = leftLimit + metaCache.getAssignCount();
             }
+
         } else {
             generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
         }
 
-        return config.getTheme().getRedefinedValue(field, generatedLong);
+        return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedLong);
     }
 
     private Long pow(long a, long b){

@@ -1,6 +1,6 @@
 package sample;
 
-public class Shipment {
+public class Shipment extends Common{
     private Long id;
     private String shipmentName;
     private String barcode;

@@ -17,9 +17,12 @@ public class Fixture {
             if(ClassUtils.isNoneObjectType(clazz)){
                 return (T) generateValue(clazz);
             }else{
-                T instance = clazz.getDeclaredConstructor().newInstance();
+                T instance = (T) ClassUtils.newInstance(clazz);
                 CacheContext.cache(clazz, instance);
-                for(Field f : instance.getClass().getDeclaredFields()){
+
+                Field[] fields = ClassUtils.getDeclaredAllFields(instance);
+
+                for(Field f : fields){
                     Class<?> type = f.getType();
                     if(!CacheContext.exist(type)){
                         setField(f, instance, generateValue(f));
@@ -64,6 +67,8 @@ public class Fixture {
             return new EnumValueGenerator(_field.getType()).create();
         }else if(_field.getType()==Map.class){
             return new MapValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
+        }else if(_field.getType()==Date.class){
+            return new Date();
         }
 
         return new ObjectValueGenerator(_field.getType()).config(config).create();
@@ -94,6 +99,8 @@ public class Fixture {
             return new EnumValueGenerator(type).config(config).create();
         }else if(type==Map.class){
             return new MapValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
+        }else if(type==Date.class){
+            return new Date();
         }
 
         return new ObjectValueGenerator(type).config(config).create();
@@ -108,7 +115,5 @@ public class Fixture {
         this.field = field;
         return this;
     }
-
-
 
 }

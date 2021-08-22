@@ -1,6 +1,5 @@
 package io.github.simplefixture.valuegenerator;
 
-import io.github.simplefixture.NumberValueType;
 import io.github.simplefixture.cache.CacheContext;
 import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
@@ -29,9 +28,9 @@ public final class DoubleValueGenerator implements ValueGenerator<Double> {
         double leftLimit = Math.pow(10L, config.getDoubleDigitSize());
         double rightLimit = leftLimit * 10L;
         double generatedDouble = 0;
+        MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            MetaCache metaCache = CacheContext.get(field);
             generatedDouble = leftLimit;
             if(metaCache!=null){
                 generatedDouble = leftLimit + metaCache.getAssignCount();
@@ -40,6 +39,6 @@ public final class DoubleValueGenerator implements ValueGenerator<Double> {
             generatedDouble = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
         }
 
-        return config.getTheme().getRedefinedValue(field, generatedDouble);
+        return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedDouble);
     }
 }

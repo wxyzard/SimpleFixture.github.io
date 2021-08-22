@@ -1,8 +1,9 @@
 package io.github.simplefixture.utils;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.WildcardType;
+import io.github.simplefixture.Fixture;
+import io.github.simplefixture.FixtureGenException;
+
+import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -34,4 +35,31 @@ public class ClassUtils {
     public static boolean isNoneObjectType(Class<?> c){
         return WrapperTypes.contains(c.getTypeName())||c.isPrimitive();
     }
+
+    public static Object newInstance(Class<?> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return  clazz.getDeclaredConstructor().newInstance();
+
+    }
+
+    public static Field[] getDeclaredAllFields(Object clazz){
+        return Stream.of(getDeclaredFieldsInSuper(clazz, new Field[0]), getDeclaredFields(clazz)).flatMap(Stream::of).toArray(Field[]::new);
+    }
+
+    public static Field[] getDeclaredFieldsInSuper(Object clazz, Field[] fields){
+        Class<?> superclass = clazz.getClass().getSuperclass();
+
+        Field[] f = Stream.of(fields, superclass.getDeclaredFields()).flatMap(Stream::of).toArray(Field[]::new);
+
+        if(superclass.equals(Object.class)){
+            return f;
+        }
+
+        return getDeclaredFieldsInSuper(superclass, f);
+    }
+
+    private static Field[] getDeclaredFields(Object clazz){
+        Field[] fields = clazz.getClass().getDeclaredFields();
+        return fields;
+    }
+
 }

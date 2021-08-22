@@ -34,6 +34,6 @@ public final class StringValueGenerator implements ValueGenerator<String>{
         if(metaCache==null){
             return field.getName().toLowerCase();
         }
-        return config.getTheme().getRedefinedValue(field, field.getName().toLowerCase() + (metaCache.getAssignCount()==0?"":metaCache.getAssignCount()));
+        return config.getTheme().getValue(metaCache.getAssignCount(), field, field.getName().toLowerCase() + (metaCache.getAssignCount()==0?"":metaCache.getAssignCount()));
     }
 }

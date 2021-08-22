@@ -6,13 +6,11 @@ import org.junit.jupiter.api.Test;
 
 public class FixtureTest {
 
-    Fixture fixture = new Fixture();
-
-    @Test
-    void create() {
-
+    public static void main(String[] args) {
+        Fixture fixture = new Fixture();
         Order order = fixture.create(Order.class);
 
         Assertions.assertEquals(order, "ordername");
     }
+
 }

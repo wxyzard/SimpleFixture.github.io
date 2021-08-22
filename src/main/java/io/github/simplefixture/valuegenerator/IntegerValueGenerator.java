@@ -1,6 +1,5 @@
 package io.github.simplefixture.valuegenerator;
 
-import io.github.simplefixture.NumberValueType;
 import io.github.simplefixture.cache.CacheContext;
 import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
@@ -30,9 +29,9 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
         int rightLimit = leftLimit * 10;
 
         int generatedInteger = 0;
+        MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            MetaCache metaCache = CacheContext.get(field);
             generatedInteger = leftLimit;
             if(metaCache!=null){
                 generatedInteger = leftLimit + metaCache.getAssignCount();
@@ -41,7 +40,8 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
             generatedInteger = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
         }
 
-        return config.getTheme().getRedefinedValue(field, generatedInteger);
+
+        return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedInteger);
     }
 
     private Integer pow(int a, int b){

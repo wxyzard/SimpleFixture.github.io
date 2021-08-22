@@ -3,7 +3,7 @@ package sample;
 import java.util.List;
 import java.util.Map;
 
-public class ShipmentItem {
+public class ShipmentItem extends Common{
     private Long id;
     private String vendorItemName;
     private Integer[] ribinPaths;
