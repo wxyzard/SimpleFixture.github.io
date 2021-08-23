@@ -7,7 +7,7 @@ SimpleFixture makes it easier for developers to do Test-Driven Development by au
 ## Usage
 
 maven
-```
+```maven
 <>
     <groupId>io.github.wxyzard</groupId>
     <artifactId>simplefixture</artifactId>
@@ -16,12 +16,12 @@ maven
 ```
 
 gradle
-```
+```gradle
 testCompile "io.github.wxyzard:simplefixture:0.1.1"
 ```
 
-## Usage
 
+java
 ```java
 import Sample
 import io.github.simplefixture.Fixture;
