@@ -55,6 +55,7 @@ Assertions.assertEquals(order.getNickName(), "wizard"); // user can modify value
 ```
 
 Advance
+configed property
 ```java
 
 FixtureConfig config = new FixtureConfig.Builder
