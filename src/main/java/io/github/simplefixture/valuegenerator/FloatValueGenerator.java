@@ -27,19 +27,19 @@ public final class FloatValueGenerator implements ValueGenerator<Float> {
 
     @Override
     public Float create() {
-        float leftLimit =  pow(10, config.getFloatDigitSize()-1);
-        float rightLimit = leftLimit * 10;
+        float startLimit =  pow(10, config.getFloatDigitSize()-2);
+        float endLimit = pow(10, config.getFloatDigitSize()-1);
 
-        float generatedFloat = 0f;
+        float generatedFloat;
         MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            generatedFloat = leftLimit;
+            generatedFloat = startLimit;
             if(metaCache!=null){
-                generatedFloat = leftLimit + metaCache.getAssignCount();
+                generatedFloat = startLimit + metaCache.getAssignCount();
             }
         } else {
-            generatedFloat = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
+            generatedFloat = startLimit + (int) (new Random().nextFloat() * (endLimit - startLimit));
         }
 
         String fieldName  = field.getName();

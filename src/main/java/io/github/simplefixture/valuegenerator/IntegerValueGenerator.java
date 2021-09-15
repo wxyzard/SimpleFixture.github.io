@@ -26,19 +26,19 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
 
     @Override
     public Integer create() {
-        int leftLimit =  pow(10, config.getLongDigitSize());
-        int rightLimit = leftLimit * 10;
+        int startLimit =  pow(10, config.getIntegerDigitSize()-2);
+        int endLimit = pow(10, config.getIntegerDigitSize()-1);
 
-        int generatedInteger = 0;
+        int generatedInteger;
         MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            generatedInteger = leftLimit;
+            generatedInteger = startLimit;
             if(metaCache!=null){
-                generatedInteger = leftLimit + metaCache.getAssignCount();
+                generatedInteger = startLimit + metaCache.getAssignCount();
             }
         } else {
-            generatedInteger = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
+            generatedInteger = endLimit + (int) (new Random().nextFloat() * (endLimit - startLimit));
         }
 
         String fieldName  = field.getName();

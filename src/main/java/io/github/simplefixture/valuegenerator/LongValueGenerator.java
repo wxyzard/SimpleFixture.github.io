@@ -26,20 +26,20 @@ public final class LongValueGenerator implements ValueGenerator<Long> {
 
     @Override
     public Long create() {
-        long leftLimit =  pow(10L, config.getLongDigitSize());
-        long rightLimit = leftLimit * 10L;
+        long startLimit =  pow(10, config.getLongDigitSize()-2);
+        long endLimit = pow(10, config.getLongDigitSize()-1);
 
         long generatedLong;
         MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            generatedLong = leftLimit;
+            generatedLong = startLimit;
             if(metaCache!=null){
-                generatedLong = leftLimit + metaCache.getAssignCount();
+                generatedLong = startLimit + metaCache.getAssignCount();
             }
 
         } else {
-            generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+            generatedLong = startLimit + (long) (Math.random() * (endLimit - startLimit));
         }
 
         String fieldName  = field.getName();

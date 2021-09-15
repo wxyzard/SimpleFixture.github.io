@@ -7,6 +7,8 @@ import io.github.simplefixture.config.FixtureConfig;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import static java.lang.StrictMath.pow;
+
 public final class DoubleValueGenerator implements ValueGenerator<Double> {
 
     private FixtureConfig config;
@@ -26,18 +28,18 @@ public final class DoubleValueGenerator implements ValueGenerator<Double> {
 
     @Override
     public Double create() {
-        double leftLimit = Math.pow(10L, config.getDoubleDigitSize());
-        double rightLimit = leftLimit * 10L;
-        double generatedDouble = 0;
-        MetaCache metaCache = CacheContext.get(field);
+        double startLimit =  pow(10, config.getDoubleDigitSize()-2);
+        double endLimit = pow(10, config.getDoubleDigitSize()-1);
+        double generatedDouble;
 
+        MetaCache metaCache = CacheContext.get(field);
         if(config.isSequenceNumberType()){
-            generatedDouble = leftLimit;
+            generatedDouble = startLimit;
             if(metaCache!=null){
-                generatedDouble = leftLimit + metaCache.getAssignCount();
+                generatedDouble = startLimit + metaCache.getAssignCount();
             }
         } else {
-            generatedDouble = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+            generatedDouble = startLimit + (long) (Math.random() * (endLimit - startLimit));
         }
 
         String fieldName  = field.getName();
