@@ -38,11 +38,16 @@ public final class StringValueGenerator extends abstractValueGenerator implement
     private String generateValue() {
         String fieldName  = field.getName();
         Map<String, Object> values = config.getValues();
-
-        if(values.containsKey(fieldName)){
-            return (String)values.get(fieldName) + (getAssignCount()==0?"":getAssignCount());
-        }else{
-            return config.getTheme().getValue(getAssignCount(), field, fieldName.toLowerCase() +  getAssignCount());
+        try{
+            if(values.containsKey(fieldName)){
+                return (String)values.get(fieldName) + (getAssignCount()==0||getAssignCount()==1?"":getAssignCount());
+            }else{
+                return config.getTheme().getValue(getAssignCount(), field, fieldName.toLowerCase() +  getAssignCount());
+            }
+        }catch (ClassCastException e){
+            throw new ClassCastException("'"+field.getName()+"' Property's type is not match. check your property value.");
+        }catch (Exception e){
+            throw new RuntimeException();
         }
     }
 

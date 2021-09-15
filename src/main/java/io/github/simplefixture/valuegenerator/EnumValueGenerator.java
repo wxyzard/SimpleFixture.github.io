@@ -32,17 +32,19 @@ public final class EnumValueGenerator implements ValueGenerator<Enum>{
 
     @Override
     public Enum create() {
-        try{
+        try {
             Class<?> aClass = ClassUtils.castToClass(type);
 
-            String fieldName  = field.getName();
+            String fieldName = field.getName();
             Map<String, Object> values = config.getValues();
 
-            if(values.containsKey(fieldName)){
-                return (Enum)values.get(fieldName);
-            }else{
-                return (Enum)aClass.getEnumConstants()[new Random().nextInt(aClass.getEnumConstants().length)];
+            if (values.containsKey(fieldName)) {
+                return (Enum) values.get(fieldName);
+            } else {
+                return (Enum) aClass.getEnumConstants()[new Random().nextInt(aClass.getEnumConstants().length)];
             }
+        }catch (ClassCastException e) {
+            throw new ClassCastException("'" + field.getName() + "' Property's type is not match. check your property value.");
         }catch (Exception e){
             throw new RuntimeException();
         }

@@ -12,11 +12,12 @@ public class FixtureTest {
         Fixture fixture = new Fixture();
         Order order = fixture
                 .setProperty("zipcode", "1234")
-                .setProperty("barcode", "abcde")
-                .setProperty("shipmentList", new ArrayList<>())
+                .setProperty("barcode", "barcode-xxx")
                 .create(Order.class);
 
         Assertions.assertEquals(order.getZipcode(), "1234");
+        Assertions.assertEquals(order.getShipmentList().get(0).getBarcode(), "barcode-xxx");
+        Assertions.assertEquals(order.getShipmentList().get(1).getBarcode(), "barcode-xxx2");
     }
 
 }
