@@ -5,6 +5,7 @@ import io.github.simplefixture.Fixture;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.*;
+import java.util.Map;
 
 public final class ArrayValueGenerator implements ValueGenerator{
 
@@ -41,7 +42,15 @@ public final class ArrayValueGenerator implements ValueGenerator{
             for(int i=0;i<loopCount;i++){
                 Array.set(objs, i, new Fixture().field(field).config(config).create(aClass));
             }
-            return objs;
+
+            String fieldName  = field.getName();
+            Map<String, Object> values = config.getValues();
+
+            if(values.containsKey(fieldName)){
+                return values.get(fieldName);
+            }else{
+                return objs;
+            }
         }catch (Exception e){
             throw new RuntimeException(e);
         }

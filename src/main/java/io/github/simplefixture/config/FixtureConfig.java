@@ -5,6 +5,9 @@ import io.github.simplefixture.StringValueType;
 import io.github.simplefixture.theme.DefaultTheme;
 import io.github.simplefixture.theme.Theme;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class FixtureConfig {
 
     private int intDigitSize;
@@ -16,6 +19,7 @@ public class FixtureConfig {
     private StringValueType valueType;
     private NumberValueType numberType;
     private Theme theme;
+    private Map<String, Object> values = new ConcurrentHashMap<>();
 
     public FixtureConfig(){
         this.maxCollectionSize = 2;
@@ -76,8 +80,16 @@ public class FixtureConfig {
         return theme;
     }
 
+
     public boolean isSequenceNumberType(){
         return getNumberValueType().equals(NumberValueType.SEQUENCE);
     }
 
+    public Map getValues() {
+        return values;
+    }
+
+    public void setProperty(String fieldKey, Object value) {
+        this.values.put(fieldKey, value);
+    }
 }

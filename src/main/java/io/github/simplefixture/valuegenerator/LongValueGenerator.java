@@ -5,6 +5,7 @@ import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 public final class LongValueGenerator implements ValueGenerator<Long> {
 
@@ -41,7 +42,15 @@ public final class LongValueGenerator implements ValueGenerator<Long> {
             generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
         }
 
-        return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedLong);
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)){
+            return (Long)values.get(fieldName);
+        }else{
+            return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedLong);
+        }
+
     }
 
     private Long pow(long a, long b){

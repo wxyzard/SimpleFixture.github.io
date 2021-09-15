@@ -5,6 +5,7 @@ import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Random;
 
 public final class IntegerValueGenerator implements ValueGenerator<Integer>{
@@ -40,8 +41,14 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
             generatedInteger = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
         }
 
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
 
-        return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedInteger);
+        if(values.containsKey(fieldName)){
+            return (Integer) values.get(fieldName);
+        }else{
+            return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedInteger);
+        }
     }
 
     private Integer pow(int a, int b){

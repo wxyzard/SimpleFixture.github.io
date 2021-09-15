@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MetaCache {
     private final Field f;
-    private AtomicInteger assignCount = new AtomicInteger(0);
+    private AtomicInteger assignCount = new AtomicInteger(1);
 
     public MetaCache(Field f){
         this.f = f;

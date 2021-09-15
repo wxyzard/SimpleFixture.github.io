@@ -7,4 +7,6 @@ public class Shipment extends Common{
     private ShipmentItem shipmentItem;
     private ShipStatus status;
     private Order order;
+
+
 }

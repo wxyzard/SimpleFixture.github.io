@@ -7,6 +7,7 @@ import io.github.simplefixture.config.FixtureConfig;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CollectionValueGenerator implements ValueGenerator<List>{
 
@@ -38,10 +39,18 @@ public class CollectionValueGenerator implements ValueGenerator<List>{
             if(loopCount==0){
                 return l;
             }
-            for(int i=0;i<loopCount;i++){
-                l.add(new Fixture().field(field).config(config).create(ClassUtils.castToClass(types[0])));
+
+            String fieldName  = field.getName();
+            Map<String, Object> values = config.getValues();
+
+            if(values.containsKey(fieldName)){
+                return (List) values.get(fieldName);
+            }else {
+                for(int i=0;i<loopCount;i++){
+                    l.add(new Fixture().field(field).config(config).create(ClassUtils.castToClass(types[0])));
+                }
+                return l;
             }
-            return l;
         }catch (Exception e){
             throw new RuntimeException(e);
         }

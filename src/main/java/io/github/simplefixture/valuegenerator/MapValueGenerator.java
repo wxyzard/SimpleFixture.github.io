@@ -34,16 +34,24 @@ public final class MapValueGenerator implements ValueGenerator<Map>{
     @Override
     public Map create() {
         try{
-            int loopCount = config.getMaxCollectionSize();
-            Map m = new HashMap();
-            if(loopCount==0){
+            String fieldName  = field.getName();
+            Map<String, Object> values = config.getValues();
+
+            if(values.containsKey(fieldName)){
+                return (Map)values.get(fieldName);
+            }else{
+                int loopCount = config.getMaxCollectionSize();
+                Map m = new HashMap();
+                if(loopCount==0){
+                    return m;
+                }
+                for(int i=0;i<loopCount;i++){
+                    m.put(new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[0])),
+                            new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[1])));
+                }
                 return m;
             }
-            for(int i=0;i<loopCount;i++){
-                m.put(new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[0])),
-                        new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[1])));
-            }
-            return m;
+
         }catch (Exception e){
             throw new RuntimeException(e);
         }

@@ -6,9 +6,10 @@ import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.UUID;
 
-public final class StringValueGenerator implements ValueGenerator<String>{
+public final class StringValueGenerator extends abstractValueGenerator implements ValueGenerator<String>{
 
     private FixtureConfig config;
     private Field field;
@@ -30,10 +31,27 @@ public final class StringValueGenerator implements ValueGenerator<String>{
         if(config.getValueType().equals(StringValueType.RANDOM)){
             return UUID.randomUUID().toString();
         }
-        MetaCache metaCache = CacheContext.get(field);
-        if(metaCache==null){
-            return field.getName().toLowerCase();
+
+        return generateValue();
+    }
+
+    private String generateValue() {
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)){
+            return (String)values.get(fieldName) + (getAssignCount()==0?"":getAssignCount());
+        }else{
+            return config.getTheme().getValue(getAssignCount(), field, fieldName.toLowerCase() +  getAssignCount());
         }
-        return config.getTheme().getValue(metaCache.getAssignCount(), field, field.getName().toLowerCase() + (metaCache.getAssignCount()==0?"":metaCache.getAssignCount()));
+    }
+
+    private int getAssignCount(){
+        MetaCache metaCache = CacheContext.get(field);
+
+        if(metaCache!=null){
+            return metaCache.getAssignCount();
+        }
+        return 0;
     }
 }

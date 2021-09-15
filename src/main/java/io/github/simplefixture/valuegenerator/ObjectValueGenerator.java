@@ -6,6 +6,7 @@ import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.util.Map;
 
 public final class ObjectValueGenerator implements ValueGenerator{
 
@@ -32,7 +33,14 @@ public final class ObjectValueGenerator implements ValueGenerator{
     @Override
     public Object create() {
         try{
-            return new Fixture().field(field).config(config).create(ClassUtils.castToClass(type));
+            String fieldName  = field.getName();
+            Map<String, Object> values = config.getValues();
+
+            if(values.containsKey(fieldName)){
+                return values.get(fieldName);
+            }else{
+                return new Fixture().field(field).config(config).create(ClassUtils.castToClass(type));
+            }
         }catch (Exception e){
             throw new RuntimeException();
         }

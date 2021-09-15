@@ -5,6 +5,7 @@ import io.github.simplefixture.cache.MetaCache;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 public final class DoubleValueGenerator implements ValueGenerator<Double> {
 
@@ -39,6 +40,13 @@ public final class DoubleValueGenerator implements ValueGenerator<Double> {
             generatedDouble = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
         }
 
-        return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedDouble);
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)){
+            return (Double) values.get(fieldName);
+        }else {
+            return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedDouble);
+        }
     }
 }

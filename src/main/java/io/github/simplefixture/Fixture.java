@@ -64,14 +64,14 @@ public class Fixture {
         }else if(_field.getType() == List.class){
             return new CollectionValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
         }else if(_field.getType().isEnum()){
-            return new EnumValueGenerator(_field.getType()).create();
+            return new EnumValueGenerator(_field.getType()).field(_field).config(config).create();
         }else if(_field.getType()==Map.class){
             return new MapValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
         }else if(_field.getType()==Date.class){
             return new Date();
         }
 
-        return new ObjectValueGenerator(_field.getType()).config(config).create();
+        return new ObjectValueGenerator(_field.getType()).field(_field).config(config).create();
     }
 
     private Object generateValue(Type type){
@@ -96,14 +96,14 @@ public class Fixture {
         }else if(type == List.class){
             return new CollectionValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
         }else if(ClassUtils.castToClass(type).isEnum()){
-            return new EnumValueGenerator(type).config(config).create();
+            return new EnumValueGenerator(type).field(field).config(config).create();
         }else if(type==Map.class){
             return new MapValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
         }else if(type==Date.class){
             return new Date();
         }
 
-        return new ObjectValueGenerator(type).config(config).create();
+        return new ObjectValueGenerator(type).field(field).config(config).create();
     }
 
     public Fixture config(FixtureConfig config) {
@@ -116,4 +116,8 @@ public class Fixture {
         return this;
     }
 
+    public Fixture setProperty(String fieldKey, Object value){
+        this.config.setProperty(fieldKey, value);
+        return this;
+    }
 }
