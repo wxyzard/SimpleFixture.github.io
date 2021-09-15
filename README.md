@@ -34,14 +34,14 @@ class Sample{
 
 ```
 
-Auto Generate Value
+Basic (Auto Generate Value)
 ```java
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
 ```
 
-Modify Value
+Advance (Modify Value)
 ```java
 
 Fixture fixture = new Fixture();
