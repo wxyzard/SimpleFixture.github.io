@@ -32,6 +32,22 @@ Sample sample = fixture.create(Sample.class);
 
 ```
 
+```java
+import Sample
+import io.github.simplefixture.Fixture;
+
+//returns 'sample fixture'
+Fixture fixture = new Fixture();
+        Sample sample = fixture
+                .setProperty("zipcode", "1234")
+                .setProperty("barcode", "abcde")
+                .setProperty("shipmentList", new ArrayList<>())
+                .create(Sample.class);
+
+ Assertions.assertEquals(order.getZipcode(), "1234");
+
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
