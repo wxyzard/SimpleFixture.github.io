@@ -35,18 +35,15 @@ class Sample{
 
 ```
 
-Generate Value
+Auto Generate Value
 ```java
-
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
 ```
 
-
 Modify Value
 ```java
-
 //returns 'sample fixture'
 Fixture fixture = new Fixture();
         Sample sample = fixture
