@@ -11,7 +11,7 @@ maven
 <>
     <groupId>io.github.wxyzard</groupId>
     <artifactId>simplefixture</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.4</version>
 </>
 ```
 
