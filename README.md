@@ -50,7 +50,7 @@ Fixture fixture = new Fixture();
                 .create(Sample.class);
 
 Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
-Assertions.assertEquals(order.getNickName(), "wizard"); // user can modify values
+Assertions.assertEquals(order.getNickName(), "wizard"); // you can modify values
 
 ```
 
@@ -59,16 +59,16 @@ Advance
 Use Configuration
 ```java
 
-FixtureConfig config = new FixtureConfig.Builder
+FixtureConfig config = new FixtureConfig.Builder // you can change Fixture configuration
                 .maxCollectinSize(3)
                 .build();
 
 Fixture fixture = new Fixture();
         Sample sample = fixture
-                .config(config)
-                .create(Sample.class);
+                .config(config) 
+                .create(Sample.class); 
 
-Assertions.assertEquals(order.getShipmentList().size, 3); // configed collection size
+Assertions.assertEquals(order.getShipmentList().size, 3); 
 
 
 ```
