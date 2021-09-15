@@ -73,6 +73,8 @@ Assertions.assertEquals(order.getShipmentList().size, 3); // configed collection
 
 ```
 
+* * *
+
 Configuration
 |attribute|description|default|
 |------|---|---|
