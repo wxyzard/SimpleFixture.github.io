@@ -35,7 +35,7 @@ class Sample{
 
 ```
 
-
+Generate Value
 ```java
 
 //returns 'sample fixture'
@@ -44,9 +44,7 @@ Sample sample = fixture.create(Sample.class);
 ```
 
 
-
-
-
+Modify Value
 ```java
 
 //returns 'sample fixture'
