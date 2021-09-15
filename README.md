@@ -22,13 +22,35 @@ testCompile "io.github.wxyzard:simplefixture:0.1.1"
 
 ## Usage
 
-java
-```java
-import Sample
-import io.github.simplefixture.Fixture;
 
+```java
+@Getter
+class Sample{
+    private String name;
+    private String nickName;
+    private List<String> phoneNumbers;
+}
+
+
+```
+
+Auto Generate Value
+```java
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
+
+```
+
+Modify Value
+```java
+
+Fixture fixture = new Fixture();
+        Sample sample = fixture
+                .setProperty("nickName", "wizard")
+                .create(Sample.class);
+
+Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
+Assertions.assertEquals(order.getNickName(), "wizard"); // user can modify values
 
 ```
 
