@@ -24,27 +24,39 @@ testCompile "io.github.wxyzard:simplefixture:0.1.1"
 
 java
 ```java
-import Sample
-import io.github.simplefixture.Fixture;
+
+@Getter
+class Sample{
+    private String name;
+    private String nickName;
+    private List<String> phoneNumbers;
+}
+
+
+```
+
+
+```java
 
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
 ```
 
+
+
+
+
 ```java
-import Sample
-import io.github.simplefixture.Fixture;
 
 //returns 'sample fixture'
 Fixture fixture = new Fixture();
         Sample sample = fixture
-                .setProperty("zipcode", "1234")
-                .setProperty("barcode", "abcde")
-                .setProperty("shipmentList", new ArrayList<>())
+                .setProperty("nickName", "wizard")
                 .create(Sample.class);
 
- Assertions.assertEquals(order.getZipcode(), "1234");
+Assertions.assertEquals(order.getName(), "name");
+Assertions.assertEquals(order.getNickName(), "john");
 
 ```
 
