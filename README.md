@@ -22,9 +22,8 @@ testCompile "io.github.wxyzard:simplefixture:0.1.1"
 
 ## Usage
 
-java
-```java
 
+```java
 @Getter
 class Sample{
     private String name;
