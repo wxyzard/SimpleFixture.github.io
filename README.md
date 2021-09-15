@@ -40,17 +40,21 @@ Auto Generate Value
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
+Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
+Assertions.assertEquals(order.getNickName(), "nickname"); // default value is all lowcase
+Assertions.assertEquals(order.getShipmentList().size(), 2); // default Collection size is 2
+
 ```
 
 Modify Value
 ```java
 Fixture fixture = new Fixture();
         Sample sample = fixture
-                .setProperty("nickName", "wizard")
+                .setProperty("nickName", "wizard") // you can modify values
                 .create(Sample.class);
 
-Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
-Assertions.assertEquals(order.getNickName(), "wizard"); // you can modify values
+Assertions.assertEquals(order.getName(), "name");
+Assertions.assertEquals(order.getNickName(), "wizard"); 
 
 ```
 
