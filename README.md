@@ -17,11 +17,10 @@ maven
 
 gradle
 ```gradle
-testCompile "io.github.wxyzard:simplefixture:0.1.1"
+testCompile "io.github.wxyzard:simplefixture:0.1.4"
 ```
 
 ## Usage
-
 
 ```java
 @Getter
@@ -34,16 +33,17 @@ class Sample{
 
 ```
 
-Basic (Auto Generate Value)
+Basic 
+
+Auto Generate Value
 ```java
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
 ```
 
-Advance (Modify Value)
+Modify Value
 ```java
-
 Fixture fixture = new Fixture();
         Sample sample = fixture
                 .setProperty("nickName", "wizard")
@@ -51,6 +51,23 @@ Fixture fixture = new Fixture();
 
 Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
 Assertions.assertEquals(order.getNickName(), "wizard"); // user can modify values
+
+```
+
+Advance
+```java
+
+FixtureConfig config = new FixtureConfig.Builder
+                .maxCollectinSize(3)
+                .build();
+
+Fixture fixture = new Fixture();
+        Sample sample = fixture
+                .config(config)
+                .create(Sample.class);
+
+Assertions.assertEquals(order.getShipmentList().size, 3); // configed collection size
+
 
 ```
 
