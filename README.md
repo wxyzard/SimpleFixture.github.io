@@ -43,14 +43,14 @@ Sample sample = fixture.create(Sample.class);
 
 Modify Value
 ```java
-//returns 'sample fixture'
+
 Fixture fixture = new Fixture();
         Sample sample = fixture
                 .setProperty("nickName", "wizard")
                 .create(Sample.class);
 
-Assertions.assertEquals(order.getName(), "name");
-Assertions.assertEquals(order.getNickName(), "john");
+Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
+Assertions.assertEquals(order.getNickName(), "wizard"); // user can modify values
 
 ```
 
