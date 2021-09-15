@@ -86,8 +86,8 @@ Configuration
 |longDigitSize|long type digit size|8|
 |doubleDigitSize|double type digit size|12|
 |maxCollectionSize|max collection type size|2|
-|StringValueType|테스트2|FieldNameType|
-|NumberValueType|테스트2|SequenceType|
+|stringValueType|테스트2|FieldNameType|
+|numberValueType|테스트2|SequenceType|
 |Theme|테스트2|DefaultTheme()|
 
 
