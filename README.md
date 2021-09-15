@@ -81,9 +81,15 @@ Assertions.assertEquals(order.getShipmentList().size, 3);
 Configuration
 |attribute|description|default|
 |------|---|---|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
+|intDigitSize|테스트2|테스트3|
+|floatDigitSize|테스트2|테스트3|
+|longDigitSize|테스트2|테스트3|
+|doubleDigitSize|테스트2|테스트3|
+|maxCollectionSize|테스트2|테스트3|
+|StringValueType|테스트2|테스트3|
+|NumberValueType|테스트2|테스트3|
+|Theme|테스트2|테스트3|
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
