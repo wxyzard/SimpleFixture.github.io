@@ -23,11 +23,22 @@ testCompile "io.github.wxyzard:simplefixture:0.1.4"
 ## Usage
 
 ```java
-@Getter
 class Sample{
     private String name;
     private String nickName;
     private List<String> phoneNumbers;
+    
+    public String getName() {
+        return name;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public List<String> getPhoneNumbers() {
+        return phoneNumbers;
+    }
 }
 
 
@@ -50,14 +61,13 @@ Json Generate Fixture
 ```java
 
 Fixture fixture = new Fixture();
-        Order order = fixture
-                .create("{\"orderNumber\": \"1234\",\"orderName\": \"user\",\"zipcode\": \"1234\"
-                ,\"isTelco\": \"true\", \"createdAt\": \"2021-01-01 12:00:00\", \"updatedAt\": \"2021-01-01 12:00:00\"}"
-                ,Order.class);
+        Sample sample = fixture
+                .create("{\"name\": \"user\",\"nickName\": \"wizard\",\"phoneNumbers\": [\"1234\",\"1234\"]}"
+                ,Sample.class);
 
-        Assertions.assertEquals(order.getOrderName(), "user");
-        Assertions.assertEquals(order.getOrderNumber(), 1234L);
-        Assertions.assertEquals(order.getZipcode(), "1234");
+        Assertions.assertEquals(sample.getName(), "user");
+        Assertions.assertEquals(sample.getNickName(), "wizard");
+        Assertions.assertEquals(sample.getPhoneNumbers().size(), 2);
 
 
 ```
