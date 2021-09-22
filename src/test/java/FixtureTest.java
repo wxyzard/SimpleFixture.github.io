@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class FixtureTest {
 
     @Test
-    public void test() {
+    public void testBasicFixture() {
         Fixture fixture = new Fixture();
         Order order = fixture
                 .setProperty("zipcode", "1234")
@@ -20,10 +20,11 @@ public class FixtureTest {
         Assertions.assertEquals(order.getZipcode(), "1234");
         Assertions.assertEquals(order.getShipmentList().get(0).getBarcode(), "barcode-xxx");
         Assertions.assertEquals(order.getShipmentList().get(1).getBarcode(), "barcode-xxx2");
+        Assertions.assertEquals(order.getShipmentList().size(), 2);
     }
 
     @Test
-    public void testConfig() {
+    public void testFixtureWithConfig() {
 
         FixtureConfig config = new FixtureConfig
                 .Builder()
@@ -38,5 +39,24 @@ public class FixtureTest {
         Assertions.assertEquals(order.getShipmentList().size(), 3);
 
     }
+
+    @Test
+    public void testJsonFixture() {
+        Fixture fixture = new Fixture();
+        Order order = fixture
+                .create("{\"orderNumber\": \"1234\",\"orderName\": \"user\",\"zipcode\": \"1234\",\"isTelco\": \"true\", \"createdAt\": \"2021-01-01 12:00:00\", \"updatedAt\": \"2021-01-01 12:00:00\"}",Order.class);
+
+        Assertions.assertEquals(order.getOrderName(), "user");
+        Assertions.assertEquals(order.getOrderNumber(), 1234L);
+        Assertions.assertEquals(order.getZipcode(), "1234");
+    }
+
+
+
+
+
+
+
+
 
 }
