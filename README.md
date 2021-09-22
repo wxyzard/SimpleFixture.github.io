@@ -11,17 +11,16 @@ maven
 <>
     <groupId>io.github.wxyzard</groupId>
     <artifactId>simplefixture</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.4</version>
 </>
 ```
 
 gradle
 ```gradle
-testCompile "io.github.wxyzard:simplefixture:0.1.1"
+testCompile "io.github.wxyzard:simplefixture:0.1.4"
 ```
 
 ## Usage
-
 
 ```java
 @Getter
@@ -34,25 +33,63 @@ class Sample{
 
 ```
 
-Basic (Auto Generate Value)
+Basic 
+
+Auto Generate Value
 ```java
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
+Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
+Assertions.assertEquals(order.getNickName(), "nickname"); // default value is all lowcase
+Assertions.assertEquals(order.getShipmentList().size(), 2); // default Collection size is 2
+
 ```
 
-Advance (Modify Value)
+Modify Value
 ```java
+Fixture fixture = new Fixture();
+        Sample sample = fixture
+                .setProperty("nickName", "wizard") // you can modify values
+                .create(Sample.class);
+
+Assertions.assertEquals(order.getName(), "name");
+Assertions.assertEquals(order.getNickName(), "wizard"); 
+
+```
+
+Advance
+
+Use Configuration
+```java
+
+FixtureConfig config = new FixtureConfig.Builder // you can change Fixture configuration
+                .maxCollectinSize(3)
+                .build();
 
 Fixture fixture = new Fixture();
         Sample sample = fixture
-                .setProperty("nickName", "wizard")
-                .create(Sample.class);
+                .config(config) 
+                .create(Sample.class); 
 
-Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
-Assertions.assertEquals(order.getNickName(), "wizard"); // user can modify values
+Assertions.assertEquals(order.getShipmentList().size, 3); 
+
 
 ```
+
+
+Configuration
+|attribute|description|default|
+|------|---|---|
+|floatDigitSize|float type digit size|1|
+|intDigitSize|int type digit size|4|
+|longDigitSize|long type digit size|8|
+|doubleDigitSize|double type digit size|12|
+|maxCollectionSize|max collection type size|2|
+|stringValueType|string value style|FieldNameType|
+|numberValueType|number value style|SequenceType|
+|Theme|theme|DefaultTheme()|
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
