@@ -35,7 +35,7 @@ class Sample{
 
 Basic 
 
-Auto Generate Value
+Auto Generate Fixture
 ```java
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
@@ -43,6 +43,20 @@ Sample sample = fixture.create(Sample.class);
 Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
 Assertions.assertEquals(order.getNickName(), "nickname"); // default value is all lowcase
 Assertions.assertEquals(order.getShipmentList().size(), 2); // default Collection size is 2
+
+```
+
+Json Generate Fixture
+```java
+
+Fixture fixture = new Fixture();
+        Order order = fixture
+                .create("{\"orderNumber\": \"1234\",\"orderName\": \"user\",\"zipcode\": \"1234\",\"isTelco\": \"true\", \"createdAt\": \"2021-01-01 12:00:00\", \"updatedAt\": \"2021-01-01 12:00:00\"}",Order.class);
+
+        Assertions.assertEquals(order.getOrderName(), "user");
+        Assertions.assertEquals(order.getOrderNumber(), 1234L);
+        Assertions.assertEquals(order.getZipcode(), "1234");
+
 
 ```
 
@@ -76,6 +90,8 @@ Assertions.assertEquals(order.getShipmentList().size, 3);
 
 
 ```
+
+
 
 
 Configuration
