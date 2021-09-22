@@ -33,7 +33,6 @@ class Sample{
 
 ```
 
-Sample Code
 
 Auto Generate Fixture
 ```java
@@ -45,6 +44,7 @@ Assertions.assertEquals(order.getNickName(), "nickname"); // default value is al
 Assertions.assertEquals(order.getShipmentList().size(), 2); // default Collection size is 2
 
 ```
+
 
 Json Generate Fixture
 ```java
@@ -62,6 +62,7 @@ Fixture fixture = new Fixture();
 
 ```
 
+
 Modify Fixture Property
 ```java
 Fixture fixture = new Fixture();
@@ -73,6 +74,7 @@ Assertions.assertEquals(order.getName(), "name");
 Assertions.assertEquals(order.getNickName(), "wizard"); 
 
 ```
+
 
 Use Fixture Configuration
 ```java
