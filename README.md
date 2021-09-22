@@ -52,7 +52,8 @@ Json Generate Fixture
 Fixture fixture = new Fixture();
         Order order = fixture
                 .create("{\"orderNumber\": \"1234\",\"orderName\": \"user\",\"zipcode\": \"1234\",
-                \"isTelco\": \"true\", \"createdAt\": \"2021-01-01 12:00:00\", \"updatedAt\": \"2021-01-01 12:00:00\"}",Order.class);
+                \"isTelco\": \"true\", \"createdAt\": \"2021-01-01 12:00:00\", \"updatedAt\": \"2021-01-01 12:00:00\"}",
+                Order.class);
 
         Assertions.assertEquals(order.getOrderName(), "user");
         Assertions.assertEquals(order.getOrderNumber(), 1234L);
