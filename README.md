@@ -33,7 +33,7 @@ class Sample{
 
 ```
 
-Basic 
+Sample Code
 
 Auto Generate Fixture
 ```java
