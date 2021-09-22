@@ -62,7 +62,7 @@ Fixture fixture = new Fixture();
 
 ```
 
-Modify Value
+Modify Fixture Property
 ```java
 Fixture fixture = new Fixture();
         Sample sample = fixture
@@ -74,9 +74,7 @@ Assertions.assertEquals(order.getNickName(), "wizard");
 
 ```
 
-Advance
-
-Use Configuration
+Use Fixture Configuration
 ```java
 
 FixtureConfig config = new FixtureConfig.Builder // you can change Fixture configuration
