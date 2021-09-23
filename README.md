@@ -46,6 +46,7 @@ class Sample{
 
 
 Auto Generate Fixture
+
 ```java
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
