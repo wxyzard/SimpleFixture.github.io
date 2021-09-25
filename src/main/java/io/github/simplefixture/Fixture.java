@@ -22,28 +22,33 @@ public class Fixture {
 
     public <T> T create(Class<T> clazz) {
         try {
-            if(ClassUtils.isNoneObjectType(clazz)){
-                return (T) generateValue(clazz);
-            }else{
-                T instance = (T) ClassUtils.newInstance(clazz);
-                CacheContext.cache(clazz, instance);
+            if(!clazz.isInterface()){
+                if(ClassUtils.isNoneObjectType(clazz)){
+                    return (T) generateValue(clazz);
+                }else{
+                    T instance = (T) ClassUtils.newInstance(clazz);
+                    CacheContext.cache(clazz, instance);
 
-                Field[] fields = ClassUtils.getDeclaredAllFields(instance);
+                    Field[] fields = ClassUtils.getDeclaredAllFields(instance);
 
-                for(Field f : fields){
-                    Class<?> type = f.getType();
-                    if(!CacheContext.exist(type)){
-                        setField(f, instance, generateValue(f));
-                    }else{
-                        setField(f, instance, CacheContext.get(type));
+                    for(Field f : fields){
+                        Class<?> type = f.getType();
+                        if(!CacheContext.exist(type)){
+                            setField(f, instance, generateValue(f));
+                        }else{
+                            setField(f, instance, CacheContext.get(type));
+                        }
                     }
+                    return instance;
                 }
-                return instance;
             }
+            return null;
         } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e) {
             throw new FixtureGenException(e);
         }
     }
+
+
 
     private <T> void setField(Field f, T instance, Object value) throws IllegalAccessException, NoSuchFieldException {
         f.setAccessible(true);
