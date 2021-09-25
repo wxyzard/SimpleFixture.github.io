@@ -40,14 +40,24 @@ public class Fixture {
                 }
                 return instance;
             }
-        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e) {
             throw new FixtureGenException(e);
         }
     }
 
-    private <T> void setField(Field f, T instance, Object value) throws IllegalAccessException {
+    private <T> void setField(Field f, T instance, Object value) throws IllegalAccessException, NoSuchFieldException {
         f.setAccessible(true);
-        f.set(instance, value);
+
+        if(Modifier.isFinal(f.getModifiers())){
+            if(f.get(f.getDeclaringClass())==null){
+                Field mf = Field.class.getDeclaredField("modifiers");
+                mf.setAccessible(true);
+                mf.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+                f.set(instance, value);
+            }
+        }else{
+            f.set(instance, value);
+        }
     }
 
     private Object generateValue(Field _field){

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class Order extends Common{
+    private static final String ORDER_PREPIX = "Order_";
     private Long orderNumber;
     private String orderName;
     private String zipcode;
