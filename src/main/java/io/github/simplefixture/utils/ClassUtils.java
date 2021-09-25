@@ -2,10 +2,13 @@ package io.github.simplefixture.utils;
 
 import io.github.simplefixture.Fixture;
 import io.github.simplefixture.FixtureGenException;
+import io.github.simplefixture.valuegenerator.*;
 
 import java.lang.reflect.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class ClassUtils {
@@ -36,9 +39,41 @@ public class ClassUtils {
         return WrapperTypes.contains(c.getTypeName())||c.isPrimitive();
     }
 
-    public static Object newInstance(Class<?> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        return  clazz.getDeclaredConstructor().newInstance();
+    public static Object newInstance(Class<?> clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Object instance = null;
+        try{
+            instance = clazz.getDeclaredConstructor().newInstance();
+        }catch (NoSuchMethodException e){
+            Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
+            for(Constructor c : declaredConstructors){
+                if (Modifier.isPrivate(c.getModifiers())) {
+                    c.setAccessible(true);
+                }
+                instance = c.newInstance(getConstructArgs(c.getParameters()));
+                break;
+            }
+        }
+        return instance;
+    }
 
+    private static Object[] getConstructArgs(Parameter[] parameters){
+        Object[] args = new Object[parameters.length];
+
+
+        for(int i=0;i<parameters.length;i++){
+            Class<?> t = parameters[i].getType();
+            if(t.isPrimitive()){
+                if(t==byte.class||t==long.class||t==int.class||t==float.class||t==double.class){
+                    args[i] = 0;
+                }else if(t==boolean.class){
+                    args[i] = true;
+                }
+            }else{
+                args[i] = null;
+            }
+        }
+
+        return args;
     }
 
     public static Field[] getDeclaredAllFields(Object clazz){
