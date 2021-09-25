@@ -42,10 +42,10 @@ public class Fixture {
                     return instance;
                 }
             }
-            return null;
-        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e) {
-            throw new FixtureGenException(e);
+        } catch (Throwable e) {
+            //error ignore
         }
+        return null;
     }
 
 
