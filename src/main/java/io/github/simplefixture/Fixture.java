@@ -1,10 +1,9 @@
 package io.github.simplefixture;
 
-import com.google.gson.GsonBuilder;
 import io.github.simplefixture.cache.CacheContext;
 import io.github.simplefixture.config.FixtureConfig;
 import io.github.simplefixture.utils.ClassUtils;
-import io.github.simplefixture.serialize.DateDeserializer;
+import io.github.simplefixture.utils.JsonUtils;
 import io.github.simplefixture.valuegenerator.*;
 
 import java.lang.reflect.*;
@@ -15,9 +14,7 @@ public class Fixture {
     private Field field;
 
     public <T> T  create(String json, Class<T> clazz){
-        return new GsonBuilder()
-                .registerTypeAdapter(Date.class, new DateDeserializer())
-                .create().fromJson(json, clazz);
+        return (T) JsonUtils.create(json, clazz);
     }
 
     public <T> T create(Class<T> clazz) {

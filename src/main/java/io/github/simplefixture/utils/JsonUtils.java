@@ -1,5 +1,6 @@
-package io.github.simplefixture.serialize;
+package io.github.simplefixture.utils;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import org.apache.commons.lang.StringUtils;
@@ -11,7 +12,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateDeserializer implements com.google.gson.JsonDeserializer<Date> {
+public class JsonUtils {
+
+    public static <T> Object create(String json, Class<T> clazz){
+        return new GsonBuilder()
+                .registerTypeAdapter(Date.class, new DateDeserializer())
+                .create().fromJson(json, clazz);
+    }
+}
+
+class DateDeserializer implements com.google.gson.JsonDeserializer<Date> {
 
     @Override
     public Date deserialize(JsonElement element, Type type, JsonDeserializationContext context) {
