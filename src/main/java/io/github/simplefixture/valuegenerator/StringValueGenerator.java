@@ -46,8 +46,6 @@ public final class StringValueGenerator extends abstractValueGenerator implement
             }
         }catch (ClassCastException e){
             throw new ClassCastException("'"+field.getName()+"' Property's type is not match. check your property value.");
-        }catch (Exception e){
-            throw new RuntimeException();
         }
     }
 

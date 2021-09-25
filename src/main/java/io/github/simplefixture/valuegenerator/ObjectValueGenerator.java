@@ -43,8 +43,6 @@ public final class ObjectValueGenerator implements ValueGenerator{
             }
         }catch (ClassCastException e){
             throw new ClassCastException("'"+field.getName()+"' Property's type is not match. check your property value.");
-        }catch (Exception e){
-            throw new RuntimeException();
         }
     }
 }
