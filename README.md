@@ -110,9 +110,6 @@ Assertions.assertEquals(order.getShipmentList().size, 3);
 
 ```
 
-
-
-
 Configuration
 |attribute|description|default|
 |------|---|---|
@@ -124,6 +121,11 @@ Configuration
 |stringValueType|string value style|FieldNameType|
 |numberValueType|number value style|SequenceType|
 |Theme|theme|DefaultTheme()|
+
+
+Use Theme
+
+
 
 
 ## Contributing
