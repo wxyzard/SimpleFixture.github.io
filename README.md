@@ -3,6 +3,12 @@ Write maintainable unit tests, faster.
 
 SimpleFixture makes it easier for developers to do Test-Driven Development by automating non-relevant Test Fixture Setup, allowing the Test Developer to focus on the essentials of each test case.
 
+## Specification
+1. Circular Reference Possible
+2. Generate Fixture
+3. Json Deserializer
+4. Support User Theme
+
 
 ## Dependency
 
@@ -11,31 +17,42 @@ maven
 <>
     <groupId>io.github.wxyzard</groupId>
     <artifactId>simplefixture</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
 </>
 ```
 
 gradle
 ```gradle
-testCompile "io.github.wxyzard:simplefixture:0.1.4"
+testCompile "io.github.wxyzard:simplefixture:0.1.5"
 ```
 
 ## Usage
 
 ```java
-@Getter
 class Sample{
     private String name;
     private String nickName;
     private List<String> phoneNumbers;
+    
+    public String getName() {
+        return name;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public List<String> getPhoneNumbers() {
+        return phoneNumbers;
+    }
 }
 
 
 ```
 
-Basic 
 
-Auto Generate Value
+Auto Generate Fixture
+
 ```java
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
@@ -46,7 +63,24 @@ Assertions.assertEquals(order.getShipmentList().size(), 2); // default Collectio
 
 ```
 
-Modify Value
+
+Json Deserializer
+```java
+
+Fixture fixture = new Fixture();
+        Sample sample = fixture
+                .create("{\"name\": \"user\",\"nickName\": \"wizard\",\"phoneNumbers\": [\"1234\",\"1234\"]}"
+                ,Sample.class);
+
+        Assertions.assertEquals(sample.getName(), "user");
+        Assertions.assertEquals(sample.getNickName(), "wizard");
+        Assertions.assertEquals(sample.getPhoneNumbers().size(), 2);
+
+
+```
+
+
+Modify Fixture Property
 ```java
 Fixture fixture = new Fixture();
         Sample sample = fixture
@@ -58,9 +92,8 @@ Assertions.assertEquals(order.getNickName(), "wizard");
 
 ```
 
-Advance
 
-Use Configuration
+Use Fixture Configuration
 ```java
 
 FixtureConfig config = new FixtureConfig.Builder // you can change Fixture configuration
@@ -76,6 +109,8 @@ Assertions.assertEquals(order.getShipmentList().size, 3);
 
 
 ```
+
+
 
 
 Configuration
