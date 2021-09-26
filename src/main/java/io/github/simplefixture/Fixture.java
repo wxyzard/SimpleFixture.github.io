@@ -12,6 +12,7 @@ import java.util.*;
 public class Fixture {
     private FixtureConfig config = new FixtureConfig();
     private Field field;
+    private Mode mode = Mode.NOMAL;
 
     public <T> T  create(String json, Class<T> clazz){
         return (T) JsonUtils.create(json, clazz);
@@ -63,67 +64,78 @@ public class Fixture {
     }
 
     private Object generateValue(Field _field){
+        Object value;
         CacheContext.cache(_field);
 
         if(_field.getType()==byte.class||_field.getType()==Byte.class){
-            return new ByteValueGenerator().field(_field).config(config).create();
+            value= new ByteValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==boolean.class||_field.getType()==Boolean.class){
-            return new BooleanValueGenerator().field(_field).config(config).create();
+            value= new BooleanValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==long.class||_field.getType()==Long.class){ //isPrimitive
-            return new LongValueGenerator().field(_field).config(config).create();
+            value= new LongValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==int.class||_field.getType()==Integer.class){
-            return new IntegerValueGenerator().field(_field).config(config).create();
+            value= new IntegerValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==float.class||_field.getType()==Float.class){
-            return new FloatValueGenerator().field(_field).config(config).create();
+            value= new FloatValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==double.class||_field.getType()==Double.class){
-            return new DoubleValueGenerator().field(_field).config(config).create();
+            value= new DoubleValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==String.class){
-            return new StringValueGenerator().field(_field).config(config).create();
+            value= new StringValueGenerator().field(_field).config(config).create();
         }else if(_field.getType().isArray()){
-            return new ArrayValueGenerator(_field.getType().getComponentType()).field(_field).config(config).create();
+            value= new ArrayValueGenerator(_field.getType().getComponentType()).field(_field).config(config).create();
         }else if(_field.getType() == List.class){
-            return new CollectionValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
+            value= new CollectionValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
         }else if(_field.getType().isEnum()){
-            return new EnumValueGenerator(_field.getType()).field(_field).config(config).create();
+            value= new EnumValueGenerator(_field.getType()).field(_field).config(config).create();
         }else if(_field.getType()==Map.class){
-            return new MapValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
+            value= new MapValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
         }else if(_field.getType()==Date.class){
-            return new Date();
+            value= new Date();
+        }else{
+            value= new ObjectValueGenerator(_field.getType()).field(_field).config(config).create();
         }
 
-        return new ObjectValueGenerator(_field.getType()).field(_field).config(config).create();
+        return randomNullValue(value);
     }
 
     private Object generateValue(Type type){
+        Object value;
         CacheContext.cache(field);
 
         if(type==byte.class||type==Byte.class){
-            return new ByteValueGenerator().field(field).config(config).create();
+            value= new ByteValueGenerator().field(field).config(config).create();
         }else if(type==boolean.class||type==Boolean.class){
-            return new BooleanValueGenerator().field(field).config(config).create();
+            value= new BooleanValueGenerator().field(field).config(config).create();
         }else if(type==long.class||type==Long.class){
-            return new LongValueGenerator().field(field).config(config).create();
+            value= new LongValueGenerator().field(field).config(config).create();
         }else if(type==int.class||type==Integer.class){
-            return new IntegerValueGenerator().field(field).config(config).create();
+            value= new IntegerValueGenerator().field(field).config(config).create();
         }else if(field.getType()==float.class||field.getType()==Float.class){
-            return new FloatValueGenerator().field(field).config(config).create();
+            value= new FloatValueGenerator().field(field).config(config).create();
         }else if(field.getType()==double.class||field.getType()==Double.class){
-            return new DoubleValueGenerator().field(field).config(config).create();
+            value= new DoubleValueGenerator().field(field).config(config).create();
         }else if(type==String.class){
-            return new StringValueGenerator().field(field).config(config).create();
+            value= new StringValueGenerator().field(field).config(config).create();
         }else if(ClassUtils.castToClass(type).isArray()){
-            return new ArrayValueGenerator(ClassUtils.castToClass(type).getComponentType()).field(field).config(config).create();
+            value= new ArrayValueGenerator(ClassUtils.castToClass(type).getComponentType()).field(field).config(config).create();
         }else if(type == List.class){
-            return new CollectionValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
+            value= new CollectionValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
         }else if(ClassUtils.castToClass(type).isEnum()){
-            return new EnumValueGenerator(type).field(field).config(config).create();
+            value= new EnumValueGenerator(type).field(field).config(config).create();
         }else if(type==Map.class){
-            return new MapValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
+            value= new MapValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
         }else if(type==Date.class){
-            return new Date();
+            value= new Date();
+        }else{
+            value= new ObjectValueGenerator(type).field(field).config(config).create();
         }
 
-        return new ObjectValueGenerator(type).field(field).config(config).create();
+        return randomNullValue(value);
+    }
+
+    public Fixture mode(Mode mode) {
+        this.mode = mode;
+        return this;
     }
 
     public Fixture config(FixtureConfig config) {
@@ -141,6 +153,11 @@ public class Fixture {
         return this;
     }
 
-
+    private Object randomNullValue(Object value){
+        if(Mode.CHAOS.equals(mode)){
+            // 10%확율로 null 반환
+        }
+        return value;
+    }
 
 }
