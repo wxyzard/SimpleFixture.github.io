@@ -43,7 +43,7 @@ public class ClassUtils {
         Object instance = null;
         try{
             instance = clazz.getDeclaredConstructor().newInstance();
-        }catch (NoSuchMethodException e){
+        }catch (NoSuchMethodException | IllegalAccessException e){
             Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
             for(Constructor c : declaredConstructors){
                 if (Modifier.isPrivate(c.getModifiers())) {
