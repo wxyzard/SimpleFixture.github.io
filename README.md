@@ -119,7 +119,7 @@ Configuration
 |doubleDigitSize|double type digit size|12|
 |maxCollectionSize|max collection type size|2|
 |stringValueType|string value style|FIELD|
-|numberValueType|This value sets the numeric data display method. SEQUENCE: The value increases by 1 RANDOME: random number|SEQUENCE|
+|numberValueType|This value sets the numeric data display method.  <br/>SEQUENCE: The value increases by 1  <br/>RANDOME: random number|SEQUENCE|
 |Theme|theme|DefaultTheme()|
 
 
