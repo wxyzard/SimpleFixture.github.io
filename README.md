@@ -118,7 +118,7 @@ Configuration
 |longDigitSize|long type digit size|8|
 |doubleDigitSize|double type digit size|12|
 |maxCollectionSize|max collection type size|2|
-|stringValueType|string value style|FIELD|
+|stringValueType|This value sets the text data display method.  <br/>FIELD: The value is FieldName  <br/>RANDOME: random UUID|FIELD|
 |numberValueType|This value sets the numeric data display method.  <br/>SEQUENCE: The value increases by 1  <br/>RANDOME: random number|SEQUENCE|
 |Theme|theme|DefaultTheme()|
 
