@@ -5,6 +5,7 @@ import io.github.simplefixture.StringValueType;
 import io.github.simplefixture.theme.DefaultTheme;
 import io.github.simplefixture.theme.Theme;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,7 +19,7 @@ public class FixtureConfig {
     private StringValueType valueType;
     private NumberValueType numberType;
     private Theme theme;
-    private Map<String, Object> values = new ConcurrentHashMap<>();
+    private Map<String, Object> values = new HashMap<>();
 
 
     public static class Builder {

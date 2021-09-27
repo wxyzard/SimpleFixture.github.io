@@ -1,8 +1,8 @@
 package io.github.simplefixture.valuegenerator;
 
+import io.github.simplefixture.MetaCache;
 import io.github.simplefixture.StringValueType;
-import io.github.simplefixture.cache.CacheContext;
-import io.github.simplefixture.cache.MetaCache;
+import io.github.simplefixture.CacheContext;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;

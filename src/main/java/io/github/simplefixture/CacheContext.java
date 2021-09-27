@@ -1,18 +1,23 @@
-package io.github.simplefixture.cache;
+package io.github.simplefixture;
 
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CacheContext {
     private static final Map<Class<?>, Object> fixtureMapCache = new LinkedHashMap<>();
     private static final Map<Integer, MetaCache> fieldMapCache = new LinkedHashMap<>();
 
-    public static void cache(Class<?> key, Object value){
+    protected static void clear(){
+        fixtureMapCache.clear();
+    }
+
+    protected static void cache(Class<?> key, Object value){
         fixtureMapCache.put(key, value);
     }
 
-    public static void cache(Field field){
+    protected static void cache(Field field){
         int key = field.getDeclaringClass().hashCode()+field.hashCode();
         MetaCache metaCache = fieldMapCache.get(key);
         if(metaCache==null){
@@ -36,11 +41,9 @@ public class CacheContext {
         return fieldMapCache.get(key);
     }
 
-
-
-
-
 }
+
+
 
 
 

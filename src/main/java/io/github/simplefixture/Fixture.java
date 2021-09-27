@@ -1,6 +1,5 @@
 package io.github.simplefixture;
 
-import io.github.simplefixture.cache.CacheContext;
 import io.github.simplefixture.config.FixtureConfig;
 import io.github.simplefixture.utils.ClassUtils;
 import io.github.simplefixture.utils.JsonUtils;
@@ -13,6 +12,19 @@ public class Fixture {
     private FixtureConfig config = new FixtureConfig();
     private Field field;
     private Mode mode = Mode.NOMAL;
+    private static boolean init = true;
+
+
+    private void init(){
+        if(init){
+            CacheContext.clear();
+            init = false;
+        }
+    }
+
+    public Fixture(){
+        init();
+    }
 
     public <T> T  create(String json, Class<T> clazz){
         return (T) JsonUtils.create(json, clazz);
