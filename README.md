@@ -118,8 +118,10 @@ Configuration
 |longDigitSize|long type digit size|8|
 |doubleDigitSize|double type digit size|12|
 |maxCollectionSize|max collection type size|2|
-|stringValueType|string value style|FieldNameType|
-|numberValueType|number value style|SequenceType|
+|stringValueType|string value style|FIELD|
+|numberValueType|This value sets the numeric data display method.
+SEQUENCE: The value increases by 1
+RANDOME: random number|SEQUENCE|
 |Theme|theme|DefaultTheme()|
 
 
