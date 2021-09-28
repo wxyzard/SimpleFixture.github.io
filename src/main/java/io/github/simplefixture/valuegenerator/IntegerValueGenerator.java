@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Random;
 
-public final class IntegerValueGenerator implements ValueGenerator<Integer>{
+public final class IntegerValueGenerator extends AbstractValueGenerator implements ValueGenerator<Integer>{
     private FixtureConfig config;
     private Field field;
 
@@ -26,17 +26,20 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
 
     @Override
     public Integer create() {
+        try{
+            return config.getTheme().getValue(getAssignCount(field), field, getValue());
+        }catch (ClassCastException e) {
+            throw new ClassCastException("'" + field.getName() + "' Property's type is not match. check your property value.");
+        }
+    }
+
+    private Integer getValue(){
         int startLimit =  pow(10, config.getIntegerDigitSize()-2);
         int endLimit = pow(10, config.getIntegerDigitSize()-1);
-
         int generatedInteger;
-        MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            generatedInteger = startLimit;
-            if(metaCache!=null){
-                generatedInteger = startLimit + metaCache.getAssignCount();
-            }
+            generatedInteger = startLimit + getAssignCount(field);;
         } else {
             generatedInteger = endLimit + (int) (new Random().nextFloat() * (endLimit - startLimit));
         }
@@ -44,14 +47,13 @@ public final class IntegerValueGenerator implements ValueGenerator<Integer>{
         String fieldName  = field.getName();
         Map<String, Object> values = config.getValues();
 
-        try{
-            if(values.containsKey(fieldName)){
-                return (Integer) values.get(fieldName);
-            }else{
-                return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedInteger);
+        if(values.containsKey(fieldName)){
+            if(values==null){
+                return null;
             }
-        }catch (ClassCastException e) {
-            throw new ClassCastException("'" + field.getName() + "' Property's type is not match. check your property value.");
+            return (Integer) values.get(fieldName);
+        }else{
+            return generatedInteger;
         }
     }
 

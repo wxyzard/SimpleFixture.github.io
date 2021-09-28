@@ -12,19 +12,6 @@ public class Fixture {
     private FixtureConfig config = new FixtureConfig();
     private Field field;
     private Mode mode = Mode.NOMAL;
-    private static boolean init = true;
-
-
-    private void init(){
-        if(init){
-            CacheContext.clear();
-            init = false;
-        }
-    }
-
-    public Fixture(){
-        init();
-    }
 
     public <T> T  create(String json, Class<T> clazz){
         return (T) JsonUtils.create(json, clazz);
@@ -151,6 +138,9 @@ public class Fixture {
     }
 
     public Fixture config(FixtureConfig config) {
+        if(this.config.getValues().size()>0){
+            config.getValues().putAll(this.config.getValues());
+        }
         this.config = config;
         return this;
     }

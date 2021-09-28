@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Random;
 
-public final class ByteValueGenerator  implements ValueGenerator<Byte>{
+public final class ByteValueGenerator extends AbstractValueGenerator  implements ValueGenerator<Byte>{
     private FixtureConfig config;
     private Field field;
 
@@ -26,15 +26,18 @@ public final class ByteValueGenerator  implements ValueGenerator<Byte>{
 
     @Override
     public Byte create() {
-        byte[] randomBytes = new byte[1];
-        new Random().nextBytes(randomBytes);
-        MetaCache metaCache = CacheContext.get(field);
-
-        String fieldName  = field.getName();
-        Map<String, Object> values = config.getValues();
-
         try{
+            byte[] randomBytes = new byte[1];
+            new Random().nextBytes(randomBytes);
+            MetaCache metaCache = CacheContext.get(field);
+
+            String fieldName  = field.getName();
+            Map<String, Object> values = config.getValues();
+
             if(values.containsKey(fieldName)){
+                if(values==null){
+                    return null;
+                }
                 return (Byte) values.get(fieldName);
             }else {
                 return config.getTheme().getValue(metaCache.getAssignCount(), field, randomBytes[0]);

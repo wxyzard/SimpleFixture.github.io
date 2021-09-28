@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public final class ObjectValueGenerator implements ValueGenerator{
+public final class ObjectValueGenerator extends AbstractValueGenerator implements ValueGenerator{
 
     private Type type;
     private FixtureConfig config;
@@ -33,16 +33,23 @@ public final class ObjectValueGenerator implements ValueGenerator{
     @Override
     public Object create() {
         try{
-            String fieldName  = field.getName();
-            Map<String, Object> values = config.getValues();
-
-            if(values.containsKey(fieldName)){
-                return values.get(fieldName);
-            }else{
-                return new Fixture().field(field).config(config).create(ClassUtils.castToClass(type));
-            }
+            return config.getTheme().getValue(getAssignCount(field), field, getValue());
         }catch (ClassCastException e){
             throw new ClassCastException("'"+field.getName()+"' Property's type is not match. check your property value.");
+        }
+    }
+
+    private Object getValue(){
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)){
+            if(values==null){
+                return null;
+            }
+            return values.get(fieldName);
+        }else{
+            return new Fixture().field(field).config(config).create(ClassUtils.castToClass(type));
         }
     }
 }

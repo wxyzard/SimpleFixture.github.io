@@ -7,7 +7,7 @@ import io.github.simplefixture.config.FixtureConfig;
 import java.lang.reflect.*;
 import java.util.Map;
 
-public final class ArrayValueGenerator implements ValueGenerator{
+public final class ArrayValueGenerator extends AbstractValueGenerator implements ValueGenerator{
 
     private Type type;
     private FixtureConfig config;
@@ -32,28 +32,34 @@ public final class ArrayValueGenerator implements ValueGenerator{
     @Override
     public Object create() {
         try{
-            int loopCount = config.getMaxCollectionSize();
-            Class<?> aClass = ClassUtils.castToClass(type);
-
-            if(loopCount==0){
-                return Array.newInstance(aClass, 0);
-            }
-            Object objs = Array.newInstance(aClass, loopCount);
-            for(int i=0;i<loopCount;i++){
-                Array.set(objs, i, new Fixture().field(field).config(config).create(aClass));
-            }
-
-            String fieldName  = field.getName();
-            Map<String, Object> values = config.getValues();
-
-            if(values.containsKey(fieldName)){
-                return values.get(fieldName);
-            }else{
-                return objs;
-            }
-
+            return config.getTheme().getValue(0, field, getValue());
         }catch (ClassCastException e) {
             throw new ClassCastException("'" + field.getName() + "' Property's type is not match. check your property value.");
+        }
+    }
+
+    private Object getValue(){
+        int loopCount = config.getMaxCollectionSize();
+        Class<?> aClass = ClassUtils.castToClass(type);
+
+        if(loopCount==0){
+            return Array.newInstance(aClass, 0);
+        }
+        Object objs = Array.newInstance(aClass, loopCount);
+        for(int i=0;i<loopCount;i++){
+            Array.set(objs, i, new Fixture().field(field).config(config).create(aClass));
+        }
+
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)){
+            if(values==null){
+                return null;
+            }
+            return values.get(fieldName);
+        }else{
+            return objs;
         }
     }
 

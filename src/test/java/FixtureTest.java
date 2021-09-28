@@ -13,13 +13,12 @@ public class FixtureTest {
     public void testBasicFixture() {
         Fixture fixture = new Fixture();
         Order order = fixture
-                .setProperty("zipcode", "1234")
-                .setProperty("barcode", "barcode-xxx")
+                .setProperty("zipcode", null)
                 .create(Order.class);
 
-        Assertions.assertEquals(order.getZipcode(), "1234");
-        Assertions.assertEquals(order.getShipmentList().get(0).getBarcode(), "barcode-xxx");
-        Assertions.assertEquals(order.getShipmentList().get(1).getBarcode(), "barcode-xxx2");
+        Assertions.assertEquals(order.getZipcode(), null);
+        Assertions.assertEquals(order.getShipmentList().get(0).getBarcode(), "barcode1");
+        Assertions.assertEquals(order.getShipmentList().get(1).getBarcode(), "barcode2");
         Assertions.assertEquals(order.getShipmentList().size(), 2);
     }
 
@@ -34,6 +33,8 @@ public class FixtureTest {
         Fixture fixture = new Fixture();
         Order order = fixture
                 .config(config)
+                .setProperty("zipcode", "1234")
+
                 .create(Order.class);
 
         Assertions.assertEquals(order.getShipmentList().size(), 3);

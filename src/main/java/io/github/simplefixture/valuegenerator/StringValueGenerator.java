@@ -1,15 +1,13 @@
 package io.github.simplefixture.valuegenerator;
 
-import io.github.simplefixture.MetaCache;
 import io.github.simplefixture.StringValueType;
-import io.github.simplefixture.CacheContext;
 import io.github.simplefixture.config.FixtureConfig;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.UUID;
 
-public final class StringValueGenerator extends abstractValueGenerator implements ValueGenerator<String>{
+public final class StringValueGenerator extends AbstractValueGenerator implements ValueGenerator<String>{
 
     private FixtureConfig config;
     private Field field;
@@ -36,25 +34,29 @@ public final class StringValueGenerator extends abstractValueGenerator implement
     }
 
     private String generateValue() {
-        String fieldName  = field.getName();
-        Map<String, Object> values = config.getValues();
         try{
-            if(values.containsKey(fieldName)){
-                return (String)values.get(fieldName) + (getAssignCount()==0||getAssignCount()==1?"":getAssignCount());
-            }else{
-                return config.getTheme().getValue(getAssignCount(), field, fieldName.toLowerCase() +  getAssignCount());
-            }
+            return config.getTheme().getValue(getAssignCount(field), field, getValue());
         }catch (ClassCastException e){
             throw new ClassCastException("'"+field.getName()+"' Property's type is not match. check your property value.");
         }
     }
 
-    private int getAssignCount(){
-        MetaCache metaCache = CacheContext.get(field);
+    protected String getValue(){
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+        Object changedValue = values.get(fieldName);
 
-        if(metaCache!=null){
-            return metaCache.getAssignCount();
+        if(values.containsKey(fieldName)){
+            if(changedValue==null){
+                return null;
+            }else if(changedValue.equals("")){
+                return "";
+            }
+            return changedValue.toString();
+        }else{
+            return fieldName.toLowerCase() + getAssignCount(field);
         }
-        return 0;
     }
+
+
 }

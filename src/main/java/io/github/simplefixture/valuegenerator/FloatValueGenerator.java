@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Random;
 
-public final class FloatValueGenerator implements ValueGenerator<Float> {
+public final class FloatValueGenerator extends AbstractValueGenerator implements ValueGenerator<Float> {
 
     private FixtureConfig config;
     private Field field;
@@ -27,17 +27,20 @@ public final class FloatValueGenerator implements ValueGenerator<Float> {
 
     @Override
     public Float create() {
+        try{
+            return config.getTheme().getValue(getAssignCount(field), field, getValue());
+        }catch (ClassCastException e) {
+            throw new ClassCastException("'" + field.getName() + "' Property's type is not match. check your property value.");
+        }
+    }
+
+    private Float getValue(){
         float startLimit =  pow(10, config.getFloatDigitSize()-2);
         float endLimit = pow(10, config.getFloatDigitSize()-1);
-
         float generatedFloat;
-        MetaCache metaCache = CacheContext.get(field);
 
         if(config.isSequenceNumberType()){
-            generatedFloat = startLimit;
-            if(metaCache!=null){
-                generatedFloat = startLimit + metaCache.getAssignCount();
-            }
+            generatedFloat = startLimit + getAssignCount(field);
         } else {
             generatedFloat = startLimit + (int) (new Random().nextFloat() * (endLimit - startLimit));
         }
@@ -45,14 +48,13 @@ public final class FloatValueGenerator implements ValueGenerator<Float> {
         String fieldName  = field.getName();
         Map<String, Object> values = config.getValues();
 
-        try{
-            if(values.containsKey(fieldName)){
-                return (Float) values.get(fieldName);
-            }else {
-                return config.getTheme().getValue(metaCache.getAssignCount(), field, generatedFloat);
+        if(values.containsKey(fieldName)){
+            if(values==null){
+                return null;
             }
-        }catch (ClassCastException e) {
-            throw new ClassCastException("'" + field.getName() + "' Property's type is not match. check your property value.");
+            return (Float) values.get(fieldName);
+        }else {
+            return generatedFloat;
         }
     }
 

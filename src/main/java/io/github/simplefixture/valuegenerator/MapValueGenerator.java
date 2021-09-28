@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 
-public final class MapValueGenerator implements ValueGenerator<Map>{
+public final class MapValueGenerator extends AbstractValueGenerator implements ValueGenerator<Map>{
 
     private Type[] types;
     private FixtureConfig config;
@@ -34,25 +34,32 @@ public final class MapValueGenerator implements ValueGenerator<Map>{
     @Override
     public Map create() {
         try{
-            String fieldName  = field.getName();
-            Map<String, Object> values = config.getValues();
-
-            if(values.containsKey(fieldName)){
-                return (Map)values.get(fieldName);
-            }else{
-                int loopCount = config.getMaxCollectionSize();
-                Map m = new HashMap();
-                if(loopCount==0){
-                    return m;
-                }
-                for(int i=0;i<loopCount;i++){
-                    m.put(new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[0])),
-                            new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[1])));
-                }
-                return m;
-            }
+            return config.getTheme().getValue(getAssignCount(field), field, getValue());
         }catch (ClassCastException e){
             throw new ClassCastException("'"+field.getName()+"' Property's type is not match. check your property value.");
+        }
+    }
+
+    private Map getValue(){
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)){
+            if(values==null){
+                return null;
+            }
+            return (Map)values.get(fieldName);
+        }else{
+            int loopCount = config.getMaxCollectionSize();
+            Map m = new HashMap();
+            if(loopCount==0){
+                return m;
+            }
+            for(int i=0;i<loopCount;i++){
+                m.put(new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[0])),
+                        new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[1])));
+            }
+            return m;
         }
     }
 
