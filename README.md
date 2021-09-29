@@ -125,6 +125,15 @@ Configuration
 
 Use Theme
 
+```java
+public interface Theme {
+
+    <T> T getValue(int index, Field field, T value); 
+}
+
+```
+
+
 
 
 
