@@ -49,7 +49,7 @@ public final class ObjectValueGenerator extends AbstractValueGenerator implement
             }
             return values.get(fieldName);
         }else{
-            return new Fixture().field(field).config(config).create(ClassUtils.castToClass(type));
+            return new Fixture(config, field).create(ClassUtils.castToClass(type));
         }
     }
 }

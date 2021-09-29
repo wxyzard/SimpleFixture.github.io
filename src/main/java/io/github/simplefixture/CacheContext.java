@@ -11,6 +11,7 @@ public class CacheContext {
 
     protected static void clear(){
         fixtureMapCache.clear();
+        fixtureMapCache.clear();
     }
 
     protected static void cache(Class<?> key, Object value){

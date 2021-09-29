@@ -13,6 +13,19 @@ public class Fixture {
     private Field field;
     private Mode mode = Mode.NOMAL;
 
+
+    public Fixture(){
+        CacheContext.clear();
+    }
+
+    public Fixture(FixtureConfig config, Field field){
+        if(this.config.getValues().size()>0){
+            config.getValues().putAll(this.config.getValues());
+        }
+        this.config = config;
+        this.field = field;
+    }
+
     public <T> T  create(String json, Class<T> clazz){
         return (T) JsonUtils.create(json, clazz);
     }
@@ -142,11 +155,6 @@ public class Fixture {
             config.getValues().putAll(this.config.getValues());
         }
         this.config = config;
-        return this;
-    }
-
-    public Fixture field(Field field){
-        this.field = field;
         return this;
     }
 

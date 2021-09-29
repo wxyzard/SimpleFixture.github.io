@@ -34,7 +34,6 @@ public class FixtureTest {
         Order order = fixture
                 .config(config)
                 .setProperty("zipcode", "1234")
-
                 .create(Order.class);
 
         Assertions.assertEquals(order.getShipmentList().size(), 3);

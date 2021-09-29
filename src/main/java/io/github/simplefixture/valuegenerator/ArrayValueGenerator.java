@@ -47,7 +47,7 @@ public final class ArrayValueGenerator extends AbstractValueGenerator implements
         }
         Object objs = Array.newInstance(aClass, loopCount);
         for(int i=0;i<loopCount;i++){
-            Array.set(objs, i, new Fixture().field(field).config(config).create(aClass));
+            Array.set(objs, i, new Fixture(config, field).create(aClass));
         }
 
         String fieldName  = field.getName();

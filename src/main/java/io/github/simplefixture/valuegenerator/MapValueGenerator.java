@@ -56,8 +56,8 @@ public final class MapValueGenerator extends AbstractValueGenerator implements V
                 return m;
             }
             for(int i=0;i<loopCount;i++){
-                m.put(new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[0])),
-                        new Fixture().config(config).field(field).create(ClassUtils.castToClass(types[1])));
+                m.put(new Fixture(config, field).create(ClassUtils.castToClass(types[0])),
+                        new Fixture(config, field).create(ClassUtils.castToClass(types[1])));
             }
             return m;
         }

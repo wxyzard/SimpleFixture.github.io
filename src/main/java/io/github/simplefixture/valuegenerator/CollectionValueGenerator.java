@@ -57,7 +57,7 @@ public class CollectionValueGenerator extends AbstractValueGenerator implements 
             return (List) values.get(fieldName);
         }else {
             for(int i=0;i<loopCount;i++){
-                l.add(new Fixture().field(field).config(config).create(ClassUtils.castToClass(types[0])));
+                l.add(new Fixture(config, field).create(ClassUtils.castToClass(types[0])));
             }
             return l;
         }

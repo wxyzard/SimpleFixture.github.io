@@ -6,7 +6,7 @@
 
     <groupId>io.github.wxyzard</groupId>
     <artifactId>simplefixture</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
 
     <name>simplefixture</name>
     <description>auto generator fixture for test</description>
