@@ -7,12 +7,12 @@ import io.github.simplefixture.valuegenerator.*;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Fixture {
     private FixtureConfig config = new FixtureConfig();
     private Field field;
     private Mode mode = Mode.NOMAL;
-
 
     public Fixture(){
         CacheContext.clear();
@@ -53,7 +53,7 @@ public class Fixture {
                 }
             }
         } catch (Throwable e) {
-            //error ignore
+            e.printStackTrace();
         }
         return null;
     }
