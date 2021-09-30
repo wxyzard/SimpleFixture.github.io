@@ -23,7 +23,7 @@ maven
 
 gradle
 ```gradle
-testCompile "io.github.wxyzard:simplefixture:0.1.5"
+testCompile "io.github.wxyzard:simplefixture:0.3.2"
 ```
 
 ## Usage
@@ -124,6 +124,15 @@ Configuration
 
 
 Use Theme
+
+```java
+public interface Theme {
+
+    <T> T getValue(int index, Field field, T value); 
+}
+
+```
+
 
 
 
