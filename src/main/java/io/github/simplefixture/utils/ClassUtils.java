@@ -5,10 +5,7 @@ import io.github.simplefixture.FixtureGenException;
 import io.github.simplefixture.valuegenerator.*;
 
 import java.lang.reflect.*;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class ClassUtils {
@@ -56,20 +53,31 @@ public class ClassUtils {
         return instance;
     }
 
-    private static Object[] getConstructArgs(Parameter[] parameters){
+    private static Object[] getConstructArgs(Parameter[] parameters) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         Object[] args = new Object[parameters.length];
-
 
         for(int i=0;i<parameters.length;i++){
             Class<?> t = parameters[i].getType();
-            if(t.isPrimitive()){
-                if(t==byte.class||t==long.class||t==int.class||t==float.class||t==double.class){
-                    args[i] = 0;
-                }else if(t==boolean.class){
-                    args[i] = true;
-                }
-            }else{
-                args[i] = null;
+            Class<?> c = ClassUtils.castToClass(t);
+
+            if (t == byte.class || t == long.class || t == int.class || t == float.class || t == double.class) {
+                args[i] = 0;
+            } else if (t == boolean.class) {
+                args[i] = true;
+            } else if (t == String.class) {
+                args[i] = "agr0";
+            } else if (c.isArray()) {
+                args[i] = Array.newInstance(t, 0);;
+            } else if (t == List.class) {
+                args[i] = new ArrayList<>();
+            } else if (c.isEnum()) {
+                args[i] = c.getEnumConstants()[new Random().nextInt(c.getEnumConstants().length)];
+            } else if (t == Map.class) {
+                args[i] = new HashMap<>();
+            } else if (t == Date.class) {
+                args[i] = new Date();
+            } else {
+                args[i] = newInstance(c);
             }
         }
 

@@ -8,6 +8,15 @@ public class Shipment extends Common{
     private ShipStatus status;
     private Order order;
 
+    public Shipment(Long id, String shipmentName, String barcode, ShipmentItem shipmentItem, ShipStatus status, Order order) {
+        this.id = id;
+        this.shipmentName = shipmentName;
+        this.barcode = barcode;
+        this.shipmentItem = shipmentItem;
+        this.status = status;
+        this.order = order;
+    }
+
     public Long getId() {
         return id;
     }
