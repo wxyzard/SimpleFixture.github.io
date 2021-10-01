@@ -1,20 +1,22 @@
 package sample;
 
 public class Shipment extends Common{
-    private Long id;
-    private String shipmentName;
-    private String barcode;
-    private ShipmentItem shipmentItem;
-    private ShipStatus status;
-    private Order order;
+    private final Long id;
+    private final String shipmentName;
+    private final String barcode;
+    private final ShipmentItem shipmentItem;
+    private final ShipStatus status;
+    private final Order order;
+    private final byte tels;
 
-    public Shipment(Long id, String shipmentName, String barcode, ShipmentItem shipmentItem, ShipStatus status, Order order) {
+    public Shipment(Long id, String shipmentName, String barcode, ShipmentItem shipmentItem, ShipStatus status, Order order,  byte tels) {
         this.id = id;
         this.shipmentName = shipmentName;
         this.barcode = barcode;
         this.shipmentItem = shipmentItem;
         this.status = status;
         this.order = order;
+        this.tels = tels;
     }
 
     public Long getId() {

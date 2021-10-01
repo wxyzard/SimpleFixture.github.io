@@ -68,10 +68,12 @@ public class ClassUtils {
                 args[i] = 0;
             } else if (t == boolean.class) {
                 args[i] = true;
-            } else if (t == byte.class || t == byte[].class) {
+            } else if (t == byte.class) {
                 byte[] randomBytes = new byte[1];
-                new Random().nextBytes(randomBytes);
                 args[i] = randomBytes[0];
+            } else if (t == byte[].class) {
+                byte[] randomBytes = new byte[1];
+                args[i] = randomBytes;
             } else if (t == String.class) {
                 args[i] = "agr0";
             } else if (c.isArray()) {

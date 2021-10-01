@@ -64,8 +64,8 @@ public class Fixture {
     private <T> void setField(Field f, T instance, Object value) throws IllegalAccessException, NoSuchFieldException {
         f.setAccessible(true);
 
-        if(Modifier.isFinal(f.getModifiers())){
-            if(f.get(f.getDeclaringClass())==null){
+        if(Modifier.isStatic(f.getModifiers())&&Modifier.isFinal(f.getModifiers())){
+            if(f.get(instance)==null){
                 Field mf = Field.class.getDeclaredField("modifiers");
                 mf.setAccessible(true);
                 mf.setInt(f, f.getModifiers() & ~Modifier.FINAL);
