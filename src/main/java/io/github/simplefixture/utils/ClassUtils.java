@@ -6,6 +6,7 @@ import io.github.simplefixture.FixtureGenException;
 import io.github.simplefixture.MetaCache;
 import io.github.simplefixture.valuegenerator.*;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.*;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -63,11 +64,11 @@ public class ClassUtils {
             Class<?> t = parameters[i].getType();
             Class<?> c = ClassUtils.castToClass(t);
 
-            if (t == byte.class || t == long.class || t == int.class || t == float.class || t == double.class) {
+            if (t == long.class || t == int.class || t == float.class || t == double.class) {
                 args[i] = 0;
             } else if (t == boolean.class) {
                 args[i] = true;
-            } else if (t == String.class) {
+            } else if (t == byte.class || t == byte[].class) {
                 byte[] randomBytes = new byte[1];
                 new Random().nextBytes(randomBytes);
                 args[i] = randomBytes[0];
