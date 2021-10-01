@@ -58,8 +58,8 @@ Auto Generate Fixture
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
-Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
-Assertions.assertEquals(order.getNickName(), "nickname"); // default value is all lowcase
+Assertions.assertEquals(order.getName(), "name1"); // default value is the same as the field name1.
+Assertions.assertEquals(order.getNickName(), "nickname1"); // default value is all lowcase
 Assertions.assertEquals(order.getShipmentList().size(), 2); // default Collection size is 2
 
 ```
