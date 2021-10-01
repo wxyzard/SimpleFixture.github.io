@@ -1,6 +1,7 @@
 package sample;
 
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 
@@ -11,6 +12,7 @@ public class Order extends Common{
     private String zipcode;
     private boolean isTelco;
     private List<Shipment> shipmentList;
+    private ZonedDateTime eventTime;
 
     public Long getOrderNumber() {
         return orderNumber;
