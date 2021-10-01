@@ -133,7 +133,7 @@ public interface Theme {
 }
 
 ```
-
+If you inherit the theme interface, you can implement the getValue() method, which is called every time a value is created in each field and allows you to predefine the value you want in this method.
 
 
 
