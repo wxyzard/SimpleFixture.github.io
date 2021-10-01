@@ -8,7 +8,7 @@ SimpleFixture makes it easier for developers to do Test-Driven Development by au
 2. Generate Fixture
 3. Json Deserializer
 4. Kotlin Compatibility
-5. Support User Theme
+5. Support User Fixture Template(Theme)
 
 
 ## Dependency
