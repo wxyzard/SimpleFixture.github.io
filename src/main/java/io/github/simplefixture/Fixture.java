@@ -6,6 +6,7 @@ import io.github.simplefixture.utils.JsonUtils;
 import io.github.simplefixture.valuegenerator.*;
 
 import java.lang.reflect.*;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -103,6 +104,8 @@ public class Fixture {
             value= new MapValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
         }else if(_field.getType()==Date.class){
             value= new Date();
+        }else if(_field.getType()== ZonedDateTime.class){
+            value= ZonedDateTime.now();
         }else{
             value= new ObjectValueGenerator(_field.getType()).field(_field).config(config).create();
         }
@@ -138,6 +141,8 @@ public class Fixture {
             value= new MapValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
         }else if(type==Date.class){
             value= new Date();
+        }else if(type== ZonedDateTime.class){
+            value= ZonedDateTime.now();
         }else{
             value= new ObjectValueGenerator(type).field(field).config(config).create();
         }

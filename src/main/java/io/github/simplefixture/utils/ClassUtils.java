@@ -5,6 +5,7 @@ import io.github.simplefixture.FixtureGenException;
 import io.github.simplefixture.valuegenerator.*;
 
 import java.lang.reflect.*;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -76,6 +77,8 @@ public class ClassUtils {
                 args[i] = new HashMap<>();
             } else if (t == Date.class) {
                 args[i] = new Date();
+            }else if(t == ZonedDateTime.class){
+                args[i] = ZonedDateTime.now();
             } else {
                 args[i] = newInstance(c);
             }
