@@ -1,7 +1,9 @@
 package io.github.simplefixture.utils;
 
+import io.github.simplefixture.CacheContext;
 import io.github.simplefixture.Fixture;
 import io.github.simplefixture.FixtureGenException;
+import io.github.simplefixture.MetaCache;
 import io.github.simplefixture.valuegenerator.*;
 
 import java.lang.reflect.*;
@@ -65,6 +67,10 @@ public class ClassUtils {
                 args[i] = 0;
             } else if (t == boolean.class) {
                 args[i] = true;
+            } else if (t == String.class) {
+                byte[] randomBytes = new byte[1];
+                new Random().nextBytes(randomBytes);
+                args[i] = randomBytes[0];
             } else if (t == String.class) {
                 args[i] = "agr0";
             } else if (c.isArray()) {
