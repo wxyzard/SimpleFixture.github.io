@@ -8,7 +8,6 @@ import io.github.simplefixture.valuegenerator.*;
 import java.lang.reflect.*;
 import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class Fixture {
     private FixtureConfig config = new FixtureConfig();
@@ -80,8 +79,10 @@ public class Fixture {
         Object value;
         CacheContext.cache(_field);
 
-        if(_field.getType()==byte.class||_field.getType()==Byte.class){
-            value= new ByteValueGenerator().field(_field).config(config).create();
+        if(_field.getType()==byte.class) {
+            value = new ByteValueGenerator().field(_field).config(config).create();
+        }else if(_field.getType()==byte[].class){
+            value= new ByteArrayValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==boolean.class||_field.getType()==Boolean.class){
             value= new BooleanValueGenerator().field(_field).config(config).create();
         }else if(_field.getType()==long.class||_field.getType()==Long.class){ //isPrimitive
@@ -117,8 +118,10 @@ public class Fixture {
         Object value;
         CacheContext.cache(field);
 
-        if(type==byte.class||type==Byte.class){
+        if(type==byte.class){
             value= new ByteValueGenerator().field(field).config(config).create();
+        }else if(type==byte[].class){
+            value= new ByteArrayValueGenerator().field(field).config(config).create();
         }else if(type==boolean.class||type==Boolean.class){
             value= new BooleanValueGenerator().field(field).config(config).create();
         }else if(type==long.class||type==Long.class){
