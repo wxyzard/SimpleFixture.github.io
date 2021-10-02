@@ -7,7 +7,8 @@ SimpleFixture makes it easier for developers to do Test-Driven Development by au
 1. Circular Reference Possible
 2. Generate Fixture
 3. Json Deserializer
-4. Support User Theme
+4. Kotlin Compatibility
+5. Support User Fixture Template(Theme)
 
 
 ## Dependency
@@ -57,8 +58,8 @@ Auto Generate Fixture
 //returns 'sample fixture'
 Sample sample = fixture.create(Sample.class);
 
-Assertions.assertEquals(order.getName(), "name"); // default value is the same as the field name.
-Assertions.assertEquals(order.getNickName(), "nickname"); // default value is all lowcase
+Assertions.assertEquals(order.getName(), "name1"); // default value is the same as the field name1.
+Assertions.assertEquals(order.getNickName(), "nickname1"); // default value is all lowcase
 Assertions.assertEquals(order.getShipmentList().size(), 2); // default Collection size is 2
 
 ```
@@ -132,7 +133,7 @@ public interface Theme {
 }
 
 ```
-
+If you inherit the theme interface, you can implement the getValue() method, which is called every time a value is created in each field and allows you to predefine the value you want in this method.
 
 
 
