@@ -10,7 +10,7 @@ public class CacheContext {
     private static final Map<Integer, MetaCache> fieldMapCache = new LinkedHashMap<>();
 
     protected static void clear(){
-        fixtureMapCache.clear();
+        fieldMapCache.clear();
         fixtureMapCache.clear();
     }
 

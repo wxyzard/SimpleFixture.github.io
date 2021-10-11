@@ -2,6 +2,7 @@ package io.github.simplefixture;
 
 import io.github.simplefixture.config.FixtureConfig;
 import io.github.simplefixture.utils.ClassUtils;
+import io.github.simplefixture.utils.FieldUtils;
 import io.github.simplefixture.utils.JsonUtils;
 import io.github.simplefixture.valuegenerator.*;
 
@@ -10,9 +11,9 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 public class Fixture {
-    private FixtureConfig config = new FixtureConfig();
     private Field field;
-    private Mode mode = Mode.NOMAL;
+    private Mode mode = Mode.NORMAL;
+    private FixtureConfig config = new FixtureConfig();
 
     public Fixture(){
         CacheContext.clear();
@@ -30,23 +31,24 @@ public class Fixture {
         return (T) JsonUtils.create(json, clazz);
     }
 
-    public <T> T create(Class<T> clazz) {
+    public <T> T create(Class<T> c) {
         try {
-            if(!clazz.isInterface()){
-                if(ClassUtils.isNoneObjectType(clazz)){
-                    return (T) generateValue(clazz);
+            if(!c.isInterface()){
+                if(ClassUtils.isNoneObjectType(c)){
+                    return (T) generateValue(c);
                 }else{
-                    T instance = (T) ClassUtils.newInstance(clazz);
-                    CacheContext.cache(clazz, instance);
+                    T instance = (T) ClassUtils.newInstance(c);
+                    CacheContext.cache(c, instance);
 
                     Field[] fields = ClassUtils.getDeclaredAllFields(instance);
 
                     for(Field f : fields){
+                        this.field = f;
                         Class<?> type = f.getType();
                         if(!CacheContext.exist(type)){
-                            setField(f, instance, generateValue(f));
+                            FieldUtils.setField(f, instance, generateValue(type));
                         }else{
-                            setField(f, instance, CacheContext.get(type));
+                            FieldUtils.setField(f, instance, CacheContext.get(type));
                         }
                     }
                     return instance;
@@ -56,106 +58,6 @@ public class Fixture {
             e.printStackTrace();
         }
         return null;
-    }
-
-
-
-    private <T> void setField(Field f, T instance, Object value) throws IllegalAccessException, NoSuchFieldException {
-        f.setAccessible(true);
-
-        if(Modifier.isStatic(f.getModifiers())&&Modifier.isFinal(f.getModifiers())){
-            if(f.get(instance)==null){
-                Field mf = Field.class.getDeclaredField("modifiers");
-                mf.setAccessible(true);
-                mf.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-                f.set(instance, value);
-            }
-        }else{
-            f.set(instance, value);
-        }
-    }
-
-    private Object generateValue(Field _field){
-        Object value;
-        CacheContext.cache(_field);
-
-        if(_field.getType()==byte.class) {
-            value = new ByteValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType()==byte[].class){
-            value= new ByteArrayValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType()==boolean.class||_field.getType()==Boolean.class){
-            value= new BooleanValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType()==long.class||_field.getType()==Long.class){ //isPrimitive
-            value= new LongValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType()==int.class||_field.getType()==Integer.class){
-            value= new IntegerValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType()==float.class||_field.getType()==Float.class){
-            value= new FloatValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType()==double.class||_field.getType()==Double.class){
-            value= new DoubleValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType()==String.class){
-            value= new StringValueGenerator().field(_field).config(config).create();
-        }else if(_field.getType().isArray()){
-            value= new ArrayValueGenerator(_field.getType().getComponentType()).field(_field).config(config).create();
-        }else if(_field.getType() == List.class){
-            value= new CollectionValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
-        }else if(_field.getType().isEnum()){
-            value= new EnumValueGenerator(_field.getType()).field(_field).config(config).create();
-        }else if(_field.getType()==Map.class){
-            value= new MapValueGenerator(((ParameterizedType)_field.getGenericType()).getActualTypeArguments()).field(_field).config(config).create();
-        }else if(_field.getType()==Date.class){
-            value= new Date();
-        }else if(_field.getType()== ZonedDateTime.class){
-            value= ZonedDateTime.now();
-        }else{
-            value= new ObjectValueGenerator(_field.getType()).field(_field).config(config).create();
-        }
-
-        return randomNullValue(value);
-    }
-
-    private Object generateValue(Type type){
-        Object value;
-        CacheContext.cache(field);
-
-        if(type==byte.class){
-            value= new ByteValueGenerator().field(field).config(config).create();
-        }else if(type==byte[].class){
-            value= new ByteArrayValueGenerator().field(field).config(config).create();
-        }else if(type==boolean.class||type==Boolean.class){
-            value= new BooleanValueGenerator().field(field).config(config).create();
-        }else if(type==long.class||type==Long.class){
-            value= new LongValueGenerator().field(field).config(config).create();
-        }else if(type==int.class||type==Integer.class){
-            value= new IntegerValueGenerator().field(field).config(config).create();
-        }else if(field.getType()==float.class||field.getType()==Float.class){
-            value= new FloatValueGenerator().field(field).config(config).create();
-        }else if(field.getType()==double.class||field.getType()==Double.class){
-            value= new DoubleValueGenerator().field(field).config(config).create();
-        }else if(type==String.class){
-            value= new StringValueGenerator().field(field).config(config).create();
-        }else if(ClassUtils.castToClass(type).isArray()){
-            value= new ArrayValueGenerator(ClassUtils.castToClass(type).getComponentType()).field(field).config(config).create();
-        }else if(type == List.class){
-            value= new CollectionValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
-        }else if(ClassUtils.castToClass(type).isEnum()){
-            value= new EnumValueGenerator(type).field(field).config(config).create();
-        }else if(type==Map.class){
-            value= new MapValueGenerator(((ParameterizedType)type).getActualTypeArguments()).field(field).config(config).create();
-        }else if(type==Date.class){
-            value= new Date();
-        }else if(type== ZonedDateTime.class){
-            value= ZonedDateTime.now();
-        }else{
-            value= new ObjectValueGenerator(type).field(field).config(config).create();
-        }
-
-        return randomNullValue(value);
-    }
-
-    public Fixture mode(Mode mode) {
-        this.mode = mode;
-        return this;
     }
 
     public Fixture config(FixtureConfig config) {
@@ -173,9 +75,65 @@ public class Fixture {
 
     private Object randomNullValue(Object value){
         if(Mode.CHAOS.equals(mode)){
-            // 10%확율로 null 반환
+            if(!this.config.getValues().containsKey(field.getName())){
+                if(!ClassUtils.isNoneObjectType(field.getType())){
+                    Random rn = new Random();
+                    int i = rn.nextInt(10) + 1;
+                    if(i==1){
+                        System.out.println(field.getName());
+                        return null;
+                    }
+                }
+            }
         }
         return value;
     }
+
+    public Fixture mode(Mode mode) {
+        this.mode = mode;
+        return this;
+    }
+
+    private Object generateValue(Class<?> c){
+        Object value;
+        CacheContext.cache(field);
+        
+        if(c==byte.class) {
+            value = new ByteValueGenerator().field(field).config(config).create();
+        }else if(c==byte[].class){
+            value= new ByteArrayValueGenerator().field(field).config(config).create();
+        }else if(c==boolean.class||c==Boolean.class){
+            value= new BooleanValueGenerator().field(field).config(config).create();
+        }else if(c==long.class||c==Long.class){
+            value= new LongValueGenerator().field(field).config(config).create();
+        }else if(c==int.class||c==Integer.class){
+            value= new IntegerValueGenerator().field(field).config(config).create();
+        }else if(c==float.class||c==Float.class){
+            value= new FloatValueGenerator().field(field).config(config).create();
+        }else if(c==double.class||c==Double.class){
+            value= new DoubleValueGenerator().field(field).config(config).create();
+        }else if(c==String.class){
+            value= new StringValueGenerator().field(field).config(config).create();
+        }else if(c.isArray()){
+            value= new ArrayValueGenerator(c.getComponentType()).field(field).config(config).create();
+        }else if(c == List.class){
+            value= new CollectionValueGenerator(((ParameterizedType)field.getGenericType()).getActualTypeArguments()).field(field).config(config).create();
+        }else if(c.isEnum()){
+            value= new EnumValueGenerator(c).field(field).config(config).create();
+        }else if(c==Map.class){
+            value= new MapValueGenerator(((ParameterizedType)field.getGenericType()).getActualTypeArguments()).field(field).config(config).create();
+        }else if(c==Date.class){
+            value= new Date();
+        }else if(c== ZonedDateTime.class){
+            value= ZonedDateTime.now();
+        }else{
+            value= new ObjectValueGenerator(c).field(field).config(config).create();
+        }
+
+        return randomNullValue(value);
+    }
+
+
+
 
 }

@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 public class ClassUtils {
     private static final List<String> WrapperTypes = Arrays.asList("java.lang.Integer", "java.lang.Long", "java.lang.Boolean", "java.lang.String", "java.lang.Double", "java.lang.Float", "java.lang.Byte", "java.lang.Character");
 
-
     public static Class<?> castToClass(Type type) {
         if (type instanceof WildcardType) {
             return (Class<?>) Stream.of(((WildcardType) type).getUpperBounds())
@@ -75,7 +74,7 @@ public class ClassUtils {
                 byte[] randomBytes = new byte[1];
                 args[i] = randomBytes;
             } else if (t == String.class) {
-                args[i] = "agr0";
+                args[i] = "any";
             } else if (c.isArray()) {
                 args[i] = Array.newInstance(t, 0);;
             } else if (t == List.class) {
