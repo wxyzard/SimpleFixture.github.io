@@ -27,10 +27,6 @@ public class Fixture {
         this.field = field;
     }
 
-    public <T> T  create(String json, Class<T> clazz){
-        return (T) JsonUtils.create(json, clazz);
-    }
-
     public <T> T create(Class<T> c) {
         try {
             if(!c.isInterface()){
@@ -58,6 +54,10 @@ public class Fixture {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public <T> T  create(String json, Class<T> clazz){
+        return (T) JsonUtils.create(json, clazz);
     }
 
     public Fixture config(FixtureConfig config) {

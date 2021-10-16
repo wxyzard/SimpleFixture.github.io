@@ -1,12 +1,6 @@
 package io.github.simplefixture.utils;
 
-import io.github.simplefixture.CacheContext;
-import io.github.simplefixture.Fixture;
-import io.github.simplefixture.FixtureGenException;
-import io.github.simplefixture.MetaCache;
-import io.github.simplefixture.valuegenerator.*;
-
-import java.io.ByteArrayInputStream;
+import org.apache.commons.lang.ArrayUtils;
 import java.lang.reflect.*;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -41,20 +35,22 @@ public class ClassUtils {
 
     public static Object newInstance(Class<?> clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Object instance = null;
-        try{
-            instance = clazz.getDeclaredConstructor().newInstance();
-        }catch (NoSuchMethodException | IllegalAccessException e){
-            Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
-            for(Constructor c : declaredConstructors){
-                if (Modifier.isPrivate(c.getModifiers())) {
-                    c.setAccessible(true);
-                }
-                instance = c.newInstance(getConstructArgs(c.getParameters()));
-                break;
+        Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
+        for(Constructor c : declaredConstructors){
+            Parameter[] parameters = c.getParameters();
+            if (Modifier.isPrivate(c.getModifiers())) {
+                c.setAccessible(true);
             }
+            if(ArrayUtils.isEmpty(parameters)){
+                instance = c.newInstance();
+            }else{
+                instance = c.newInstance(getConstructArgs(parameters));
+            }
+            break;
         }
         return instance;
     }
+
 
     private static Object[] getConstructArgs(Parameter[] parameters) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         Object[] args = new Object[parameters.length];
