@@ -70,7 +70,7 @@ public class ClassUtils {
                 byte[] randomBytes = new byte[1];
                 args[i] = randomBytes;
             } else if (t == String.class) {
-                args[i] = "any";
+                args[i] = parameters[i].getName();
             } else if (c.isArray()) {
                 args[i] = Array.newInstance(t, 0);;
             } else if (t == List.class) {
