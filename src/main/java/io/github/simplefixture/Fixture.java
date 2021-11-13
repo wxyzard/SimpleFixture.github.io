@@ -1,7 +1,5 @@
 package io.github.simplefixture;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import io.github.simplefixture.config.FixtureConfig;
 import io.github.simplefixture.utils.ClassUtils;
 import io.github.simplefixture.utils.FieldUtils;
@@ -16,7 +14,6 @@ public class Fixture {
     private Field field;
     private Mode mode = Mode.NORMAL;
     private FixtureConfig config = new FixtureConfig();
-    private final Logger log = LoggerFactory.getLogger(Fixture.class);
 
     public Fixture(){
         CacheContext.clear();
@@ -54,7 +51,7 @@ public class Fixture {
                 }
             }
         } catch (Throwable e) {
-            log.debug("fixture generator exception",e);
+            //ignore exception
         }
         return null;
     }
