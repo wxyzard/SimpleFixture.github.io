@@ -4,7 +4,7 @@ Write maintainable unit tests, faster.
 SimpleFixture makes it easier for developers to do Test-Driven Development by automating non-relevant Test Fixture Setup, allowing the Test Developer to focus on the essentials of each test case.
 
 ## Specification
-1. Circular Reference Possible
+1. Circular Reference Object
 2. Generate Fixture
 3. Json Deserializer
 4. Kotlin Compatibility
