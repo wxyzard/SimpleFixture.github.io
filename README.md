@@ -18,13 +18,13 @@ maven
 <>
     <groupId>io.github.wxyzard</groupId>
     <artifactId>simplefixture</artifactId>
-    <version>0.1.5</version>
+    <version>0.4.1</version>
 </>
 ```
 
 gradle
 ```gradle
-testCompile "io.github.wxyzard:simplefixture:0.3.2"
+testCompile "io.github.wxyzard:simplefixture:0.4.1"
 ```
 
 ## Usage
