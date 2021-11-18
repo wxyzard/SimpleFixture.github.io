@@ -47,10 +47,9 @@ public final class IntegerValueGenerator extends AbstractValueGenerator implemen
         String fieldName  = field.getName();
         Map<String, Object> values = config.getValues();
 
-        if(values.containsKey(fieldName)){
-            if(values==null){
-                return null;
-            }
+        if(values==null){
+            return null;
+        }else if(values.containsKey(fieldName)){
             return (Integer) values.get(fieldName);
         }else{
             return generatedInteger;

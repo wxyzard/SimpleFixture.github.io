@@ -49,6 +49,16 @@ public class FixtureTest {
         Assertions.assertEquals(order.getZipcode(), "1234");
     }
 
+    @Test
+    public void testNullObjectFixture() {
+        Fixture fixture = new Fixture();
+        Order order = fixture
+                .setProperty("yourShipment", null)
+                .create(Order.class);
+
+        Assertions.assertEquals(order.getYourShipment(), null);
+    }
+
 
 
 

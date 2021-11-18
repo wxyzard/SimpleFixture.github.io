@@ -43,10 +43,9 @@ public final class ObjectValueGenerator extends AbstractValueGenerator implement
         String fieldName  = field.getName();
         Map<String, Object> values = config.getValues();
 
-        if(values.containsKey(fieldName)){
-            if(values==null){
-                return null;
-            }
+        if(values==null){
+            return null;
+        }else if(values.containsKey(fieldName)){
             return values.get(fieldName);
         }else{
             return new Fixture(config, field).create(ClassUtils.castToClass(type));

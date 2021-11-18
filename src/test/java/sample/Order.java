@@ -11,6 +11,8 @@ public class Order extends Common{
     private String orderName;
     private String zipcode;
     private boolean isTelco;
+    private Shipment myShipment;
+    private Shipment yourShipment;
     private List<Shipment> shipmentList;
     private ZonedDateTime eventTime;
 
@@ -33,4 +35,13 @@ public class Order extends Common{
     public List<Shipment> getShipmentList() {
         return shipmentList;
     }
+
+    public Shipment getMyShipment() {
+        return myShipment;
+    }
+
+    public Shipment getYourShipment() {
+        return yourShipment;
+    }
+
 }

@@ -44,10 +44,9 @@ public final class MapValueGenerator extends AbstractValueGenerator implements V
         String fieldName  = field.getName();
         Map<String, Object> values = config.getValues();
 
-        if(values.containsKey(fieldName)){
-            if(values==null){
-                return null;
-            }
+        if(values==null){
+            return null;
+        }else if(values.containsKey(fieldName)){
             return (Map)values.get(fieldName);
         }else{
             int loopCount = config.getMaxCollectionSize();

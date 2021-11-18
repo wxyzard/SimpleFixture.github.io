@@ -46,7 +46,9 @@ public final class StringValueGenerator extends AbstractValueGenerator implement
         Map<String, Object> values = config.getValues();
         Object changedValue = values.get(fieldName);
 
-        if(values.containsKey(fieldName)){
+        if(values==null){
+            return null;
+        }else if(values.containsKey(fieldName)){
             if(changedValue==null){
                 return null;
             }else if(changedValue.equals("")){

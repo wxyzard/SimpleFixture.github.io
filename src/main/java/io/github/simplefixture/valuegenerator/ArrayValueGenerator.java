@@ -53,10 +53,9 @@ public final class ArrayValueGenerator extends AbstractValueGenerator implements
         String fieldName  = field.getName();
         Map<String, Object> values = config.getValues();
 
-        if(values.containsKey(fieldName)){
-            if(values==null){
-                return null;
-            }
+        if(values==null){
+            return null;
+        }else if(values.containsKey(fieldName)){
             return values.get(fieldName);
         }else{
             return objs;

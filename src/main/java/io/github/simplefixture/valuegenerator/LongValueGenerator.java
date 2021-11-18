@@ -49,10 +49,9 @@ public final class LongValueGenerator extends AbstractValueGenerator implements 
         Map<String, Object> values = config.getValues();
 
 
-        if(values.containsKey(fieldName)){
-            if(values==null){
-                return null;
-            }
+        if(values==null){
+            return null;
+        }else if(values.containsKey(fieldName)){
             return (Long)values.get(fieldName);
         }else{
             return generatedLong;

@@ -35,7 +35,6 @@ public class Fixture {
                 }else{
                     T instance = (T) ClassUtils.newInstance(c);
                     CacheContext.cache(c, instance);
-
                     Field[] fields = ClassUtils.getDeclaredAllFields(instance);
 
                     for(Field f : fields){
@@ -44,7 +43,7 @@ public class Fixture {
                         if(!CacheContext.exist(type)){
                             FieldUtils.setField(f, instance, generateValue(type));
                         }else{
-                            FieldUtils.setField(f, instance, CacheContext.get(type));
+                            FieldUtils.setField(f, instance, retrieveValue(type));
                         }
                     }
                     return instance;
@@ -54,6 +53,17 @@ public class Fixture {
             //ignore exception
         }
         return null;
+    }
+
+    private Object retrieveValue(Class<?> type){
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)) {
+            return values.get(fieldName);
+        }else{
+            return CacheContext.get(type);
+        }
     }
 
     public <T> T  create(String json, Class<T> clazz){
@@ -132,6 +142,7 @@ public class Fixture {
 
         return randomNullValue(value);
     }
+
 
 
 
