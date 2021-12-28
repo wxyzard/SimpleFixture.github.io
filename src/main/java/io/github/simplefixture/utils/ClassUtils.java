@@ -38,9 +38,7 @@ public class ClassUtils {
         Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
         for(Constructor c : declaredConstructors){
             Parameter[] parameters = c.getParameters();
-            if (Modifier.isPrivate(c.getModifiers())) {
-                c.setAccessible(true);
-            }
+            c.setAccessible(true);
             if(ArrayUtils.isEmpty(parameters)){
                 instance = c.newInstance();
             }else{
