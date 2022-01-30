@@ -15,9 +15,9 @@ SimpleFixture makes it easier for developers to do Test-Driven Development by au
 
 maven
 ```maven
-   <groupId>io.github.wxyzard</groupId>
-   <artifactId>simplefixture</artifactId>
-   <version>0.4.3</version>
+<groupId>io.github.wxyzard</groupId>
+<artifactId>simplefixture</artifactId>
+<version>0.5.0</version>
 
 ```
 
