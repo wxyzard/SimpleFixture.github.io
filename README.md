@@ -18,7 +18,6 @@ maven
 <groupId>io.github.wxyzard</groupId>
 <artifactId>simplefixture</artifactId>
 <version>0.5.0</version>
-
 ```
 
 gradle
