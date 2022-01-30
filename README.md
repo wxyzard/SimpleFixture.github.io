@@ -22,7 +22,7 @@ maven
 
 gradle
 ```gradle
-testCompile "io.github.wxyzard:simplefixture:0.4.3"
+testCompile "io.github.wxyzard:simplefixture:0.5.0"
 ```
 
 ## Usage
