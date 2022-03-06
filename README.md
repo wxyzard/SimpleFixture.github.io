@@ -1,10 +1,10 @@
-# simplefixture.github.io
+# Simplefixture
 Write maintainable unit tests, faster.
 
 SimpleFixture makes it easier for developers to do Test-Driven Development by automating non-relevant Test Fixture Setup, allowing the Test Developer to focus on the essentials of each test case.
 
 ## Specification
-1. Soving Circular Reference
+1. Solving Circular Reference
 2. Generate Fixture
 3. Json Deserializer
 4. Kotlin Compatibility
@@ -15,16 +15,14 @@ SimpleFixture makes it easier for developers to do Test-Driven Development by au
 
 maven
 ```maven
-<>
-    <groupId>io.github.wxyzard</groupId>
-    <artifactId>simplefixture</artifactId>
-    <version>0.4.3</version>
-</>
+<groupId>io.github.wxyzard</groupId>
+<artifactId>simplefixture</artifactId>
+<version>0.5.0</version>
 ```
 
 gradle
 ```gradle
-testCompile "io.github.wxyzard:simplefixture:0.4.3"
+testCompile "io.github.wxyzard:simplefixture:0.5.0"
 ```
 
 ## Usage
