@@ -27,6 +27,17 @@ public class Fixture {
         this.field = field;
     }
 
+    public Fixture(FixtureConfig config){
+        if(this.config.getValues().size()>0){
+            config.getValues().putAll(this.config.getValues());
+        }
+        this.config = config;
+    }
+
+    public <T> T create(String json, Class<T> clazz){
+        return (T) JsonUtils.create(json, clazz);
+    }
+
     public <T> T create(Class<T> c) {
         try {
             if(!c.isInterface()){
@@ -53,21 +64,6 @@ public class Fixture {
             //ignore exception
         }
         return null;
-    }
-
-    private Object retrieveValue(Class<?> type){
-        String fieldName  = field.getName();
-        Map<String, Object> values = config.getValues();
-
-        if(values.containsKey(fieldName)) {
-            return values.get(fieldName);
-        }else{
-            return CacheContext.get(type);
-        }
-    }
-
-    public <T> T  create(String json, Class<T> clazz){
-        return (T) JsonUtils.create(json, clazz);
     }
 
     public Fixture config(FixtureConfig config) {
@@ -102,6 +98,17 @@ public class Fixture {
     public Fixture mode(Mode mode) {
         this.mode = mode;
         return this;
+    }
+
+    private Object retrieveValue(Class<?> type){
+        String fieldName  = field.getName();
+        Map<String, Object> values = config.getValues();
+
+        if(values.containsKey(fieldName)) {
+            return values.get(fieldName);
+        }else{
+            return CacheContext.get(type);
+        }
     }
 
     private Object generateValue(Class<?> c){

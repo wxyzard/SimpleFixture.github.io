@@ -14,6 +14,7 @@ public class FixtureTest {
                 .create(Order.class);
 
         Assertions.assertEquals(order.getZipcode(), null);
+        Assertions.assertEquals(order.getYourShipment().getBarcode(), "barcode1");
         Assertions.assertEquals(order.getShipmentList().get(0).getBarcode(), "barcode1");
         Assertions.assertEquals(order.getShipmentList().get(1).getBarcode(), "barcode2");
         Assertions.assertEquals(order.getShipmentList().size(), 2);
