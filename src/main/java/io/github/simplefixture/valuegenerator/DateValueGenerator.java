@@ -69,7 +69,7 @@ public final class DateValueGenerator extends AbstractValueGenerator implements 
         try {
             return transFormat.parse(d);
         } catch (ParseException e) {
-            throw new DateParseException(d, "yyyy-MM-dd HH:mm:ss", e);
+            throw new DateParseException(e);
         }
 
     }
