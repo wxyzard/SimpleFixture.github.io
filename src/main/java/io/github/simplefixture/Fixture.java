@@ -140,7 +140,7 @@ public class Fixture {
         }else if(c==Map.class){
             value= new MapValueGenerator(((ParameterizedType)field.getGenericType()).getActualTypeArguments()).field(field).config(config).create();
         }else if(c==Date.class){
-            value= new Date();
+            value= new DateValueGenerator().field(field).config(config).create();
         }else if(c== ZonedDateTime.class){
             value= ZonedDateTime.now();
         }else{

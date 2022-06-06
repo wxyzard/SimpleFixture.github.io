@@ -10,6 +10,7 @@ public class FixtureTest {
     public void testBasicFixture() {
         Fixture fixture = new Fixture();
         Order order = fixture
+                .setProperty("createdAt", "2022-11-09 11:11:11")
                 .setProperty("zipcode", null)
                 .create(Order.class);
 
