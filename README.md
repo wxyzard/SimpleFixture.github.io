@@ -95,7 +95,7 @@ Assertions.assertEquals(order.getNickName(), "wizard");
 Use Fixture Configuration
 ```java
 
-FixtureConfig config = new FixtureConfig.Builder // you can change Fixture configuration
+FixtureConfig config = new FixtureConfig.Builder() // you can change Fixture configuration
                 .maxCollectinSize(3)
                 .build();
 
